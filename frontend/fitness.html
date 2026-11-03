@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness Tracker - NutriRoute</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <div class="app-wrapper">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="dashboard.html" class="brand-logo">
+                    <i class="fa-solid fa-leaf"></i>
+                    <span>NutriRoute<span class="ai-spark"><i class="fa-solid fa-sparkles"></i></span></span>
+                </a>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-label">NutriRoute</div>
+                <a href="dashboard.html" class="nav-link"><i class="fa-solid fa-house"></i> <span>Dashboard</span></a>
+                <a href="recommendations.html" class="nav-link"><i class="fa-solid fa-wand-magic-sparkles"></i> <span>AI Food Recommendations</span></a>
+                <a href="health.html" class="nav-link"><i class="fa-solid fa-heart-pulse"></i> <span>Health & Nutrition</span></a>
+                <a href="meal-planner.html" class="nav-link"><i class="fa-solid fa-calendar-days"></i> <span>Meal Planner</span></a>
+                <a href="bmi.html" class="nav-link"><i class="fa-solid fa-scale-balanced"></i> <span>BMI Calculator</span></a>
+                <a href="water.html" class="nav-link"><i class="fa-solid fa-droplet"></i> <span>Water Tracker</span></a>
+                <a href="fitness.html" class="nav-link active"><i class="fa-solid fa-person-running"></i> <span>Fitness Tracker</span></a>
+                <a href="favorites.html" class="nav-link"><i class="fa-solid fa-heart"></i> <span>Favorites</span></a>
+                <a href="history.html" class="nav-link"><i class="fa-solid fa-clock-rotate-left"></i> <span>Recommendation History</span></a>
+                <a href="profile.html" class="nav-link"><i class="fa-solid fa-user"></i> <span>My Profile</span></a>
+                <a href="settings.html" class="nav-link"><i class="fa-solid fa-gear"></i> <span>Settings</span></a>
+            </nav>
+        </aside>
+
+        <!-- Topbar -->
+        <header class="topbar">
+            <div class="topbar-left">
+                <button class="sidebar-toggle" title="Toggle Navigation"><i class="fa-solid fa-bars"></i></button>
+            </div>
+            <div class="topbar-right">
+                <div class="user-menu" onclick="window.location.href='profile.html'">
+                    <div class="user-avatar current-user-avatar">US</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Fitness View -->
+        <main class="main-content">
+            <div style="margin-bottom:2rem;">
+                <h2>Fitness Tracker</h2>
+                <p class="text-muted" style="font-size:0.9rem;">Log your daily steps, active exercise minutes, and calories burned.</p>
+            </div>
+
+            <!-- Summary Cards -->
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:1.25rem; margin-bottom:2rem;">
+                <div class="card" style="text-align:center;">
+                    <span style="color:var(--text-muted); font-size:0.8rem; font-weight:600; text-transform:uppercase;">Daily Steps</span>
+                    <h2 id="fitness-steps-val" style="font-size:2rem; font-weight:800; color:var(--primary); margin:0.4rem 0 0.2rem;">0</h2>
+                    <span class="badge badge-success">Target: 10,000</span>
+                </div>
+
+                <div class="card" style="text-align:center;">
+                    <span style="color:var(--text-muted); font-size:0.8rem; font-weight:600; text-transform:uppercase;">Exercise Minutes</span>
+                    <h2 id="fitness-mins-val" style="font-size:2rem; font-weight:800; color:var(--secondary, #0ea5e9); margin:0.4rem 0 0.2rem;">0 mins</h2>
+                    <span class="badge badge-secondary">Active Time</span>
+                </div>
+
+                <div class="card" style="text-align:center;">
+                    <span style="color:var(--text-muted); font-size:0.8rem; font-weight:600; text-transform:uppercase;">Calories Burned</span>
+                    <h2 id="fitness-cals-val" style="font-size:2rem; font-weight:800; color:#f59e0b; margin:0.4rem 0 0.2rem;">0 kcal</h2>
+                    <span class="badge badge-secondary">Active Energy</span>
+                </div>
+            </div>
+
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:2rem;">
+                <!-- Log Form Card -->
+                <div class="card">
+                    <form id="fitness-form">
+                        <h3 style="margin-bottom:1.25rem; color:var(--primary);"><i class="fa-solid fa-pen-to-square"></i> Log Today's Activity</h3>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="input-steps">Step Count</label>
+                            <input type="number" id="input-steps" class="form-control" placeholder="e.g. 7500" min="0">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="input-mins">Active Exercise Minutes</label>
+                            <input type="number" id="input-mins" class="form-control" placeholder="e.g. 45" min="0">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="input-cals">Calories Burned (kcal)</label>
+                            <input type="number" id="input-cals" class="form-control" placeholder="e.g. 350" min="0">
+                        </div>
+
+                        <button type="submit" class="btn btn-primary" style="width:100%; padding:0.85rem; margin-top:1rem;">
+                            <i class="fa-solid fa-floppy-disk"></i> Save Activity Log
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Weekly Chart Card -->
+                <div class="card">
+                    <h3 style="margin-bottom:1rem;"><i class="fa-solid fa-chart-line text-primary"></i> Weekly Step Trend</h3>
+                    <div style="height:250px; position:relative;">
+                        <canvas id="fitnessHistoryChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/common.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/fitness.js"></script>
+</body>
+</html>

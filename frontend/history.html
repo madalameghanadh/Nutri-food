@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recommendation History - NutriRoute</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="app-wrapper">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="dashboard.html" class="brand-logo">
+                    <i class="fa-solid fa-leaf"></i>
+                    <span>NutriRoute<span class="ai-spark"><i class="fa-solid fa-sparkles"></i></span></span>
+                </a>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-label">NutriRoute</div>
+                <a href="dashboard.html" class="nav-link"><i class="fa-solid fa-house"></i> <span>Dashboard</span></a>
+                <a href="recommendations.html" class="nav-link"><i class="fa-solid fa-wand-magic-sparkles"></i> <span>AI Food Recommendations</span></a>
+                <a href="health.html" class="nav-link"><i class="fa-solid fa-heart-pulse"></i> <span>Health & Nutrition</span></a>
+                <a href="meal-planner.html" class="nav-link"><i class="fa-solid fa-calendar-days"></i> <span>Meal Planner</span></a>
+                <a href="bmi.html" class="nav-link"><i class="fa-solid fa-scale-balanced"></i> <span>BMI Calculator</span></a>
+                <a href="water.html" class="nav-link"><i class="fa-solid fa-droplet"></i> <span>Water Tracker</span></a>
+                <a href="fitness.html" class="nav-link"><i class="fa-solid fa-person-running"></i> <span>Fitness Tracker</span></a>
+                <a href="favorites.html" class="nav-link"><i class="fa-solid fa-heart"></i> <span>Favorites</span></a>
+                <a href="history.html" class="nav-link active"><i class="fa-solid fa-clock-rotate-left"></i> <span>Recommendation History</span></a>
+                <a href="profile.html" class="nav-link"><i class="fa-solid fa-user"></i> <span>My Profile</span></a>
+                <a href="settings.html" class="nav-link"><i class="fa-solid fa-gear"></i> <span>Settings</span></a>
+            </nav>
+        </aside>
+
+        <!-- Topbar -->
+        <header class="topbar">
+            <div class="topbar-left">
+                <button class="sidebar-toggle" title="Toggle Navigation"><i class="fa-solid fa-bars"></i></button>
+            </div>
+            <div class="topbar-right">
+                <div class="user-menu" onclick="window.location.href='profile.html'">
+                    <div class="user-avatar current-user-avatar">US</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main History View -->
+        <main class="main-content">
+            <div style="margin-bottom:2rem;">
+                <h2>Recommendation History</h2>
+                <p class="text-muted" style="font-size:0.9rem;">Historical log of AI recommendation evaluations generated for your health profile.</p>
+            </div>
+
+            <div class="card" style="padding:0; overflow:hidden;">
+                <table style="width:100%; border-collapse:collapse; text-align:left;">
+                    <thead style="background:var(--bg-input, #f3f4f6); border-bottom:1px solid var(--border-color);">
+                        <tr>
+                            <th style="padding:1rem;">Date</th>
+                            <th style="padding:1rem;">Food Name</th>
+                            <th style="padding:1rem;">Score</th>
+                            <th style="padding:1rem;">Evaluation Reason</th>
+                            <th style="padding:1rem; text-align:right;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="history-table-body">
+                        <tr>
+                            <td colspan="5" class="text-center text-muted" style="padding:3rem;">
+                                <i class="fa-solid fa-spinner fa-spin" style="font-size:2rem; margin-bottom:0.5rem; display:block;"></i>
+                                Loading recommendation history...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/common.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/history.js"></script>
+</body>
+</html>

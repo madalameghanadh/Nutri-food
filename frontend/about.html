@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About & Architecture - NutriRoute</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="landing-page">
+
+    <!-- Top Navbar -->
+    <header class="topbar">
+        <div class="topbar-left">
+            <a href="index.html" class="brand-logo">
+                <i class="fa-solid fa-leaf"></i>
+                <span>NutriRoute<span class="ai-spark"><i class="fa-solid fa-sparkles"></i></span></span>
+            </a>
+        </div>
+
+        <nav style="display:flex; align-items:center; gap:1.5rem;" class="desktop-only">
+            <a href="index.html" style="color:var(--text-muted); font-weight:500;">Home</a>
+            <a href="index.html#features" style="color:var(--text-muted); font-weight:500;">Features</a>
+            <a href="recommendations.html" style="color:var(--text-muted); font-weight:500;">Food Explorer</a>
+            <a href="about.html" style="font-weight:600; color:var(--primary);">About & AI Architecture</a>
+        </nav>
+
+        <div class="topbar-right">
+            <button class="icon-btn theme-toggle-btn" title="Toggle Theme"><i class="fa-solid fa-moon"></i></button>
+            <a href="dashboard.html" class="btn btn-primary"><i class="fa-solid fa-gauge"></i> Go to Dashboard</a>
+        </div>
+    </header>
+
+    <main class="main-content" style="padding:6rem 2rem 4rem; max-width:1100px; margin:0 auto;">
+        
+        <!-- Header -->
+        <div style="text-align:center; max-width:750px; margin:0 auto 4rem;">
+            <span class="badge badge-primary" style="margin-bottom:0.75rem; padding:0.4rem 0.9rem;"><i class="fa-solid fa-brain"></i> Educational Engineering System</span>
+            <h1 style="font-size:2.5rem; margin-bottom:1rem;">About NutriRoute & AI Architecture</h1>
+            <p class="text-muted" style="font-size:1.1rem;">
+                NutriRoute is an AI-powered health-aware food recommendation platform designed to help users explore personalized meal choices through transparent multi-criteria scoring.
+            </p>
+        </div>
+
+        <!-- Problem to Discovery Flow -->
+        <div class="card" style="margin-bottom:3rem; padding:2rem;">
+            <h3 style="margin-bottom:1.5rem; text-align:center;"><i class="fa-solid fa-lightbulb text-primary"></i> Personalization Challenge to Discovery</h3>
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:1rem; text-align:center;">
+                <div style="background:var(--bg-input); padding:1.25rem; border-radius:var(--radius-md);">
+                    <i class="fa-solid fa-circle-question" style="font-size:1.75rem; color:var(--danger); margin-bottom:0.5rem;"></i>
+                    <h4 style="font-size:0.95rem;">Generic Diets</h4>
+                    <p class="text-muted" style="font-size:0.775rem;">One-size-fits-all meal plans fail to account for personal tastes and allergies.</p>
+                </div>
+                <div style="background:var(--bg-input); padding:1.25rem; border-radius:var(--radius-md);">
+                    <i class="fa-solid fa-sliders" style="font-size:1.75rem; color:var(--accent); margin-bottom:0.5rem;"></i>
+                    <h4 style="font-size:0.95rem;">Multi-Factor Input</h4>
+                    <p class="text-muted" style="font-size:0.775rem;">Collects age, BMI, activity level, fitness goal, dietary preferences, and dislikes.</p>
+                </div>
+                <div style="background:var(--bg-input); padding:1.25rem; border-radius:var(--radius-md);">
+                    <i class="fa-solid fa-brain" style="font-size:1.75rem; color:var(--primary); margin-bottom:0.5rem;"></i>
+                    <h4 style="font-size:0.95rem;">AI Recommendation</h4>
+                    <p class="text-muted" style="font-size:0.775rem;">Content-based matching & rule-based filtering calculate normalized 0-100% scores.</p>
+                </div>
+                <div style="background:var(--bg-input); padding:1.25rem; border-radius:var(--radius-md);">
+                    <i class="fa-solid fa-chart-pie" style="font-size:1.75rem; color:var(--secondary); margin-bottom:0.5rem;"></i>
+                    <h4 style="font-size:0.95rem;">Nutrition Analysis</h4>
+                    <p class="text-muted" style="font-size:0.775rem;">Instant macro breakdown (Protein, Carbs, Fats, Fiber) for every meal.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Technical System Architecture Diagram -->
+        <div class="card" style="margin-bottom:3rem; padding:2rem;">
+            <h3 style="margin-bottom:1.5rem;"><i class="fa-solid fa-network-wired text-primary"></i> System Technical Architecture</h3>
+            
+            <div style="background:var(--bg-input); border:1px solid var(--border-color); border-radius:var(--radius-lg); padding:2rem; font-family:monospace; font-size:0.875rem; overflow-x:auto;">
+                <pre style="margin:0; color:var(--text-main); line-height:1.5;">
+                        USER REGISTRATION / PROFILE DATA
+                                      ↓
+                ┌───────────────────────────────────────────┐
+                │   Preference & Allergy Rule Filter       │
+                └───────────────────────────────────────────┘
+                                      ↓
+                ┌───────────────────────────────────────────┐
+                │   Nutrition & Macro Density Analyzer     │
+                └───────────────────────────────────────────┘
+                                      ↓
+                ┌───────────────────────────────────────────┐
+                │   AI Weighted Scoring Engine (0-100%)     │
+                │   • Diet Match: 25%                       │
+                │   • Goal Match: 25%                       │
+                │   • Lifestyle Match: 20%                  │
+                │   • Nutrition Quality: 20%                │
+                │   • Cuisine Match: 10%                    │
+                └───────────────────────────────────────────┘
+                                      ↓
+                        FOOD DATABASE (50+ Items)
+                                      ↓
+                       SORTED PERSONALIZED MEAL RANKING
+                </pre>
+            </div>
+        </div>
+
+        <!-- AI & Machine Learning Methodology Explanation -->
+        <div class="card" style="margin-bottom:3rem; padding:2rem;">
+            <h3 style="margin-bottom:1.5rem;"><i class="fa-solid fa-code-branch text-primary"></i> Recommendation Methodology Explained</h3>
+
+            <div style="display:flex; flex-direction:column; gap:1.5rem;">
+                <div>
+                    <h4 style="color:var(--primary);"><i class="fa-solid fa-check"></i> 1. Content-Based Recommendation</h4>
+                    <p class="text-muted" style="font-size:0.9rem; margin-top:0.25rem;">
+                        The algorithm compares individual food item attributes (calories, protein, fiber, glycemic index, tags) directly against the user's health goal (e.g. Muscle Support vs Weight Management).
+                    </p>
+                </div>
+
+                <div>
+                    <h4 style="color:var(--primary);"><i class="fa-solid fa-check"></i> 2. Rule-Based Penalty Filtering</h4>
+                    <p class="text-muted" style="font-size:0.9rem; margin-top:0.25rem;">
+                        Foods conflicting with registered food allergies (e.g. dairy, nuts, gluten) or strict dietary boundaries (e.g. Vegan, Vegetarian) trigger an immediate penalty deduction (-100 points) to guarantee safe food discovery.
+                    </p>
+                </div>
+
+                <div>
+                    <h4 style="color:var(--primary);"><i class="fa-solid fa-check"></i> 3. Weighted Mathematical Scoring</h4>
+                    <div style="background:var(--primary-light); padding:1rem; border-radius:var(--radius-md); font-family:monospace; margin-top:0.5rem;">
+                        Score = (Diet Match × 25) + (Goal Match × 25) + (Preference Match × 20) + (Nutrition Match × 20) + (Cuisine Match × 10) - Penalty
+                    </div>
+                </div>
+
+                <div>
+                    <h4 style="color:var(--primary);"><i class="fa-solid fa-check"></i> 4. Explainable AI Rationale</h4>
+                    <p class="text-muted" style="font-size:0.9rem; margin-top:0.25rem;">
+                        Rather than acting as a black box, every recommendation displays transparent bullet points explaining exact reasons why the dish was selected (e.g. <em>"✓ Matches your vegetarian preference"</em>, <em>"✓ High protein supports muscle goals"</em>).
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Educational Disclaimer Callout -->
+        <div class="card" style="background:var(--accent-light); border-color:var(--accent);">
+            <div style="display:flex; align-items:center; gap:1rem;">
+                <i class="fa-solid fa-shield-cat" style="font-size:2rem; color:var(--accent);"></i>
+                <div>
+                    <h4 style="color:var(--accent);">Educational Prototype Statement</h4>
+                    <p style="font-size:0.875rem; color:var(--text-main);">
+                        NutriRoute provides general educational nutrition information and wellness suggestions. It does not provide medical diagnosis or prescribe clinical diets.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer style="padding:3rem 2rem 2rem; background:var(--bg-card); border-top:1px solid var(--border-color); text-align:center;">
+        <p style="font-size:0.85rem; color:var(--text-muted);">&copy; 2026 NutriRoute. Educational AI Nutrition System.</p>
+    </footer>
+
+    <script src="js/storage.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

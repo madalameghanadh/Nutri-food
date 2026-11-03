@@ -1,0 +1,168 @@
+/* ==========================================================================
+   NutriRoute Core Design System & Styling
+   Modern Healthcare & Food-Tech Palette, Modern Typography & Theme Custom Props
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+:root {
+  /* Color Palette - Light Mode */
+  --color-primary: #10B981;        /* Fresh Emerald */
+  --color-primary-hover: #059669;  /* Deep Emerald */
+  --color-primary-light: #D1FAE5;  /* Mint Tint */
+  --color-secondary: #0EA5E9;      /* Sky Blue */
+  --color-secondary-light: #E0F2FE;
+  --color-accent: #F59E0B;         /* Warm Amber */
+  --color-accent-light: #FEF3C7;
+  --color-danger: #EF4444;         /* Soft Red */
+  --color-danger-light: #FEE2E2;
+
+  --bg-app: #F8FAFC;               /* Clean Slate Light */
+  --bg-card: #FFFFFF;
+  --bg-sidebar: #FFFFFF;
+  --bg-input: #F1F5F9;
+
+  --text-main: #0F172A;
+  --text-muted: #64748B;
+  --text-inverse: #FFFFFF;
+
+  --border-color: #E2E8F0;
+  --border-hover: #CBD5E1;
+
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 12px -2px rgba(15, 23, 42, 0.06), 0 2px 6px -1px rgba(15, 23, 42, 0.04);
+  --shadow-lg: 0 12px 32px -4px rgba(15, 23, 42, 0.08), 0 4px 12px -2px rgba(15, 23, 42, 0.04);
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-full: 9999px;
+
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+
+  --font-heading: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* Dark Mode Overrides */
+html.dark {
+  --bg-app: #0B0F19;               /* Ultra Dark Slate */
+  --bg-card: #151D2A;
+  --bg-sidebar: #111827;
+  --bg-input: #1F2937;
+
+  --text-main: #F8FAFC;
+  --text-muted: #94A3B8;
+
+  --border-color: #1E293B;
+  --border-hover: #334155;
+
+  --color-primary-light: rgba(16, 185, 129, 0.15);
+  --color-secondary-light: rgba(14, 165, 233, 0.15);
+  --color-accent-light: rgba(245, 158, 11, 0.15);
+  --color-danger-light: rgba(239, 68, 68, 0.15);
+
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 16px -2px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 12px 36px -4px rgba(0, 0, 0, 0.6);
+}
+
+/* Global Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--bg-app);
+  color: var(--text-main);
+  line-height: 1.5;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color var(--transition-normal), color var(--transition-normal);
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  color: var(--text-main);
+  letter-spacing: -0.02em;
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--color-primary-hover);
+}
+
+button, input, select, textarea {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+/* Utilities */
+.hidden {
+  display: none !important;
+}
+
+.text-primary { color: var(--color-primary); }
+.text-secondary { color: var(--color-secondary); }
+.text-accent { color: var(--color-accent); }
+.text-danger { color: var(--color-danger); }
+.text-muted { color: var(--text-muted); }
+
+.bg-primary-light { background-color: var(--color-primary-light); }
+.bg-secondary-light { background-color: var(--color-secondary-light); }
+.bg-accent-light { background-color: var(--color-accent-light); }
+.bg-danger-light { background-color: var(--color-danger-light); }
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: var(--radius-full);
+  font-size: 0.78rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.badge-primary {
+  background-color: var(--color-primary-light);
+  color: var(--color-primary-hover);
+}
+
+.badge-secondary {
+  background-color: var(--color-secondary-light);
+  color: var(--color-secondary);
+}
+
+.badge-accent {
+  background-color: var(--color-accent-light);
+  color: #D97706;
+}
+
+.badge-danger {
+  background-color: var(--color-danger-light);
+  color: var(--color-danger);
+}
+
+.badge-outline {
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+}

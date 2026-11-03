@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Water Tracker - NutriRoute</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <div class="app-wrapper">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="dashboard.html" class="brand-logo">
+                    <i class="fa-solid fa-leaf"></i>
+                    <span>NutriRoute<span class="ai-spark"><i class="fa-solid fa-sparkles"></i></span></span>
+                </a>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-label">Core Navigation</div>
+                <a href="dashboard.html" class="nav-link"><i class="fa-solid fa-house"></i> <span>Dashboard</span></a>
+                <a href="recommendations.html" class="nav-link"><i class="fa-solid fa-wand-magic-sparkles"></i> <span>AI Recommendations</span></a>
+                <a href="health.html" class="nav-link"><i class="fa-solid fa-heart-pulse"></i> <span>Health & Nutrition</span></a>
+                <a href="meal-planner.html" class="nav-link"><i class="fa-solid fa-calendar-days"></i> <span>Meal Planner</span></a>
+                <a href="bmi.html" class="nav-link"><i class="fa-solid fa-scale-balanced"></i> <span>BMI Calculator</span></a>
+                <a href="water.html" class="nav-link active"><i class="fa-solid fa-droplet"></i> <span>Water Tracker</span></a>
+                <a href="fitness.html" class="nav-link"><i class="fa-solid fa-person-running"></i> <span>Fitness Tracker</span></a>
+                <a href="favorites.html" class="nav-link"><i class="fa-solid fa-heart"></i> <span>Favorites</span></a>
+                <a href="history.html" class="nav-link"><i class="fa-solid fa-clock-rotate-left"></i> <span>Recommendation History</span></a>
+                <a href="profile.html" class="nav-link"><i class="fa-solid fa-user"></i> <span>My Profile</span></a>
+                <a href="settings.html" class="nav-link"><i class="fa-solid fa-gear"></i> <span>Settings</span></a>
+            </nav>
+        </aside>
+
+        <!-- Topbar -->
+        <header class="topbar">
+            <div class="topbar-left">
+                <button class="sidebar-toggle" title="Toggle Navigation"><i class="fa-solid fa-bars"></i></button>
+            </div>
+            <div class="topbar-right">
+                <div class="user-menu" onclick="window.location.href='profile.html'">
+                    <div class="user-avatar current-user-avatar">US</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Water Tracker View -->
+        <main class="main-content">
+            <div style="margin-bottom:2rem;">
+                <h2>Water Tracker</h2>
+                <p class="text-muted" style="font-size:0.9rem;">Track your daily water intake and maintain optimal cellular hydration.</p>
+            </div>
+
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:2rem; margin-bottom:2rem;">
+                <!-- Circular Tracker Controls -->
+                <div class="card" style="text-align:center;">
+                    <h3 style="margin-bottom:1rem;"><i class="fa-solid fa-glass-water text-secondary"></i> Today's Water Intake</h3>
+                    
+                    <div style="position:relative; width:200px; height:200px; margin:1.5rem auto;">
+                        <svg width="200" height="200" viewBox="0 0 200 200">
+                            <circle cx="100" cy="100" r="85" fill="none" stroke="var(--bg-input, #e2e8f0)" stroke-width="16" />
+                            <circle id="water-svg-circle" cx="100" cy="100" r="85" fill="none" stroke="#0ea5e9" stroke-width="16"
+                                    stroke-dasharray="534" stroke-dashoffset="534" stroke-linecap="round"
+                                    transform="rotate(-90 100 100)" style="transition:stroke-dashoffset 0.4s ease;" />
+                        </svg>
+                        <div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%);">
+                            <h2 style="font-size:2.2rem; font-weight:800; color:#0ea5e9;" id="water-display-val">0 / 8 glasses</h2>
+                            <span style="font-size:0.85rem; color:var(--text-muted);">Target: 8 Glasses</span>
+                        </div>
+                    </div>
+
+                    <!-- Quick Add Action Buttons -->
+                    <div style="display:flex; justify-content:center; gap:0.75rem; flex-wrap:wrap; margin-top:1rem;">
+                        <button id="add-1-btn" class="btn btn-secondary"><i class="fa-solid fa-plus"></i> +1 Glass</button>
+                        <button id="add-2-btn" class="btn btn-secondary"><i class="fa-solid fa-plus"></i> +2 Glasses</button>
+                        <button id="reset-water-btn" class="btn btn-outline"><i class="fa-solid fa-rotate-left"></i> Reset</button>
+                    </div>
+                </div>
+
+                <!-- Weekly History Chart Card -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fa-solid fa-chart-bar text-secondary"></i> Weekly Water Consumption</h3>
+                        <span class="badge badge-secondary">7-Day Log</span>
+                    </div>
+                    <div style="height:250px; position:relative;">
+                        <canvas id="hydrationHistoryChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/common.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/water.js"></script>
+</body>
+</html>

@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Checkout - NutriRoute Delivery</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .payment-option {
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: var(--transition);
+        }
+        .payment-option:hover, .payment-option.selected {
+            border-color: var(--primary);
+            background: rgba(16, 185, 129, 0.05);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-wrapper">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="dashboard.html" class="brand-logo">
+                    <i class="fa-solid fa-leaf"></i>
+                    <span>NutriRoute<span class="ai-spark"><i class="fa-solid fa-sparkles"></i></span></span>
+                </a>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-label">NutriRoute System</div>
+                <a href="dashboard.html" class="nav-link"><i class="fa-solid fa-house"></i> <span>Dashboard</span></a>
+                <a href="recommendations.html" class="nav-link"><i class="fa-solid fa-wand-magic-sparkles"></i> <span>AI Food Recommendations</span></a>
+                <a href="cart.html" class="nav-link"><i class="fa-solid fa-cart-shopping"></i> <span>Healthy Cart</span> <span class="badge badge-primary cart-count-badge" style="margin-left:auto; display:none;">0</span></a>
+                <a href="orders.html" class="nav-link"><i class="fa-solid fa-truck-fast"></i> <span>My Orders & Tracking</span></a>
+                <a href="health.html" class="nav-link"><i class="fa-solid fa-heart-pulse"></i> <span>Health & Nutrition</span></a>
+                <a href="profile.html" class="nav-link"><i class="fa-solid fa-user"></i> <span>My Profile</span></a>
+                <a href="#" onclick="AuthService.logout()" class="nav-link text-danger" style="margin-top:auto;"><i class="fa-solid fa-right-from-bracket"></i> <span>Logout</span></a>
+            </nav>
+        </aside>
+
+        <!-- Topbar -->
+        <header class="topbar">
+            <div class="topbar-left">
+                <button class="sidebar-toggle" title="Toggle Navigation"><i class="fa-solid fa-bars"></i></button>
+            </div>
+            <div class="topbar-right">
+                <div class="user-menu" onclick="window.location.href='profile.html'">
+                    <div class="user-avatar current-user-avatar">US</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div style="margin-bottom:2rem;">
+                <h2><i class="fa-solid fa-credit-card text-primary"></i> Checkout & Delivery Details</h2>
+                <p class="text-muted" style="font-size:0.9rem;">Provide your delivery location and payment preference to dispatch your healthy meal.</p>
+            </div>
+
+            <div id="checkout-alert" style="display:none; margin-bottom:1.5rem;" class="badge badge-danger"></div>
+
+            <form id="checkout-form" style="display:grid; grid-template-columns:1fr 380px; gap:2rem; align-items:start;">
+                <!-- Left: Address & Payment Info -->
+                <div>
+                    <!-- Delivery Address Card -->
+                    <div class="card" style="padding:1.5rem; margin-bottom:1.5rem;">
+                        <h4 style="margin-bottom:1rem; border-bottom:1px solid var(--border-color); padding-bottom:0.5rem; color:var(--primary);">
+                            <i class="fa-solid fa-location-dot"></i> Delivery Address
+                        </h4>
+
+                        <div class="form-group">
+                            <label class="form-label" for="chk-address">Full Street Address *</label>
+                            <textarea id="chk-address" class="form-control" rows="3" placeholder="Flat No., Building Name, Street, Landmark, Area, City" required></textarea>
+                        </div>
+
+                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+                            <div class="form-group">
+                                <label class="form-label" for="chk-phone">Contact Phone Number *</label>
+                                <input type="tel" id="chk-phone" class="form-control" placeholder="+91 98765 43210" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="chk-type">Address Type</label>
+                                <select id="chk-type" class="form-control">
+                                    <option value="Home">Home</option>
+                                    <option value="Work">Work / Office</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="chk-notes">Delivery Instructions (Optional)</label>
+                            <input type="text" id="chk-notes" class="form-control" placeholder="e.g. Leave at door, Ring the bell, No plastic cutlery">
+                        </div>
+                    </div>
+
+                    <!-- Payment Method Card -->
+                    <div class="card" style="padding:1.5rem;">
+                        <h4 style="margin-bottom:1rem; border-bottom:1px solid var(--border-color); padding-bottom:0.5rem; color:var(--primary);">
+                            <i class="fa-solid fa-wallet"></i> Payment Method
+                        </h4>
+
+                        <label class="payment-option selected" id="opt-cod">
+                            <input type="radio" name="payment_method" value="Cash on Delivery" checked>
+                            <i class="fa-solid fa-money-bill-wave text-success" style="font-size:1.5rem;"></i>
+                            <div>
+                                <div style="font-weight:600;">Cash on Delivery (COD)</div>
+                                <div style="font-size:0.8rem; color:var(--text-muted);">Pay securely in cash or UPI QR scan upon delivery</div>
+                            </div>
+                        </label>
+
+                        <label class="payment-option" id="opt-upi">
+                            <input type="radio" name="payment_method" value="UPI / Online Demo">
+                            <i class="fa-solid fa-mobile-screen-button text-primary" style="font-size:1.5rem;"></i>
+                            <div>
+                                <div style="font-weight:600;">UPI / Instant Demo Pay</div>
+                                <div style="font-size:0.8rem; color:var(--text-muted);">Google Pay, PhonePe, Paytm, Cards (Instant simulation)</div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Right: Order & Nutrition Summary -->
+                <div>
+                    <div class="card" style="padding:1.5rem; position:sticky; top:5rem;">
+                        <h4 style="margin-bottom:1.25rem; border-bottom:1px solid var(--border-color); padding-bottom:0.75rem;">
+                            <i class="fa-solid fa-receipt text-primary"></i> Order Preview
+                        </h4>
+
+                        <div id="checkout-items-list" style="margin-bottom:1.25rem; max-height:220px; overflow-y:auto;">
+                            <!-- Populated via JS -->
+                        </div>
+
+                        <!-- Nutrition Card -->
+                        <div style="background:rgba(16, 185, 129, 0.1); border-radius:var(--radius-sm); padding:0.85rem; margin-bottom:1.25rem;">
+                            <div style="font-size:0.8rem; font-weight:600; color:var(--primary); margin-bottom:0.25rem;">
+                                <i class="fa-solid fa-leaf"></i> Total Calories in this Meal
+                            </div>
+                            <div style="font-size:0.95rem; font-weight:700;" id="chk-calories">0 kcal</div>
+                        </div>
+
+                        <div style="display:flex; justify-content:space-between; margin-bottom:0.6rem; font-size:0.9rem;">
+                            <span class="text-muted">Subtotal</span>
+                            <span id="chk-subtotal">₹0</span>
+                        </div>
+                        <div style="display:flex; justify-content:space-between; margin-bottom:0.6rem; font-size:0.9rem;">
+                            <span class="text-muted">Delivery Fee</span>
+                            <span id="chk-delivery">₹40</span>
+                        </div>
+                        <div style="display:flex; justify-content:space-between; border-top:2px dashed var(--border-color); padding-top:0.85rem; margin-top:0.85rem; font-size:1.2rem; font-weight:700; color:var(--primary);">
+                            <span>Total Payable</span>
+                            <span id="chk-total">₹0</span>
+                        </div>
+
+                        <div style="margin-top:1.5rem;">
+                            <button type="submit" id="place-order-btn" class="btn btn-primary" style="width:100%; padding:0.9rem; font-size:1rem; font-weight:600;">
+                                <i class="fa-solid fa-shield-halved"></i> Place Order Now
+                            </button>
+                            <a href="cart.html" class="btn btn-outline" style="width:100%; text-align:center; margin-top:0.75rem;">
+                                <i class="fa-solid fa-arrow-left"></i> Back to Cart
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </main>
+    </div>
+
+    <script src="js/common.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/orders.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const items = CartService.getItems();
+            if (items.length === 0) {
+                window.location.href = 'cart.html';
+                return;
+            }
+
+            const totals = CartService.getTotals();
+
+            // Populate preview items
+            const itemsList = document.getElementById('checkout-items-list');
+            itemsList.innerHTML = items.map(item => `
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem; font-size:0.875rem;">
+                    <div>
+                        <span style="font-weight:600;">${item.quantity}x</span> ${item.name}
+                    </div>
+                    <div style="font-weight:600;">₹${(item.price || 150) * item.quantity}</div>
+                </div>
+            `).join('');
+
+            document.getElementById('chk-calories').textContent = `${totals.totalCalories} kcal (${totals.totalProtein}g Protein)`;
+            document.getElementById('chk-subtotal').textContent = `₹${totals.subtotal}`;
+            document.getElementById('chk-delivery').textContent = totals.deliveryFee === 0 ? 'FREE' : `₹${totals.deliveryFee}`;
+            document.getElementById('chk-total').textContent = `₹${totals.total}`;
+
+            // Pre-fill user phone if stored
+            try {
+                const userRes = await NutriCommon.apiFetch('/user/profile');
+                if (userRes.success && userRes.user) {
+                    if (userRes.user.phone) {
+                        document.getElementById('chk-phone').value = userRes.user.phone;
+                    }
+                }
+            } catch(e) {}
+
+            // Payment radio selection styling
+            const radios = document.querySelectorAll('input[name="payment_method"]');
+            radios.forEach(radio => {
+                radio.addEventListener('change', () => {
+                    document.querySelectorAll('.payment-option').forEach(opt => opt.classList.remove('selected'));
+                    radio.closest('.payment-option').classList.add('selected');
+                });
+            });
+
+            // Form submission
+            const form = document.getElementById('checkout-form');
+            const submitBtn = document.getElementById('place-order-btn');
+            const alertBox = document.getElementById('checkout-alert');
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                alertBox.style.display = 'none';
+
+                const address = document.getElementById('chk-address').value;
+                const phone = document.getElementById('chk-phone').value;
+                const notes = document.getElementById('chk-notes').value;
+                const paymentMethod = document.querySelector('input[name="payment_method"]:checked')?.value || 'Cash on Delivery';
+
+                NutriCommon.setLoading(submitBtn, true, 'Placing your order...');
+
+                const orderData = {
+                    items: items,
+                    delivery_address: address,
+                    contact_phone: phone,
+                    delivery_notes: notes,
+                    payment_method: paymentMethod
+                };
+
+                const res = await OrderService.placeOrder(orderData);
+
+                NutriCommon.setLoading(submitBtn, false);
+
+                if (res.success && res.order) {
+                    // Clear cart
+                    CartService.clear();
+                    NutriCommon.showToast('Order Placed Successfully! 🛵', 'success');
+                    setTimeout(() => {
+                        window.location.href = `order-tracking.html?id=${res.order.id}`;
+                    }, 800);
+                } else {
+                    alertBox.textContent = res.message || 'Failed to place order. Please try again.';
+                    alertBox.style.display = 'block';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

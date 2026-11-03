@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_app">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Create Your Account"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@color/primary"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="4dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Set up your health profile for personalized recommendations"
+            android:textSize="13sp"
+            android:textColor="@color/text_muted"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Full Name -->
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Full Name" android:textColor="@color/text_main" android:textStyle="bold" android:layout_marginBottom="6dp"/>
+        <EditText android:id="@+id/et_full_name" android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:inputType="textPersonName" android:hint="Your full name" android:background="@drawable/bg_input" android:padding="14dp" android:layout_marginBottom="14dp"/>
+
+        <!-- Email -->
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Email" android:textColor="@color/text_main" android:textStyle="bold" android:layout_marginBottom="6dp"/>
+        <EditText android:id="@+id/et_email" android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:inputType="textEmailAddress" android:hint="you@example.com" android:background="@drawable/bg_input" android:padding="14dp" android:layout_marginBottom="14dp"/>
+
+        <!-- Password -->
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Password" android:textColor="@color/text_main" android:textStyle="bold" android:layout_marginBottom="6dp"/>
+        <EditText android:id="@+id/et_password" android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:inputType="textPassword" android:hint="Min 6 characters" android:background="@drawable/bg_input" android:padding="14dp" android:layout_marginBottom="14dp"/>
+
+        <!-- Age / Height / Weight in row -->
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginBottom="14dp">
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:layout_marginEnd="6dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Age" android:textColor="@color/text_main" android:textStyle="bold" android:layout_marginBottom="6dp"/>
+                <EditText android:id="@+id/et_age" android:layout_width="match_parent" android:layout_height="wrap_content" android:inputType="number" android:hint="25" android:background="@drawable/bg_input" android:padding="14dp"/>
+            </LinearLayout>
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:layout_marginEnd="6dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Height (cm)" android:textColor="@color/text_main" android:textStyle="bold" android:layout_marginBottom="6dp"/>
+                <EditText android:id="@+id/et_height" android:layout_width="match_parent" android:layout_height="wrap_content" android:inputType="numberDecimal" android:hint="170" android:background="@drawable/bg_input" android:padding="14dp"/>
+            </LinearLayout>
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Weight (kg)" android:textColor="@color/text_main" android:textStyle="bold" android:layout_marginBottom="6dp"/>
+                <EditText android:id="@+id/et_weight" android:layout_width="match_parent" android:layout_height="wrap_content" android:inputType="numberDecimal" android:hint="65" android:background="@drawable/bg_input" android:padding="14dp"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Gender -->
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Gender" android:textColor="@color/text_main" android:textStyle="bold" android:layout_marginBottom="6dp"/>
+        <Spinner android:id="@+id/spinner_gender" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@drawable/bg_input" android:padding="14dp" android:layout_marginBottom="14dp"/>
+
+        <!-- Activity Level -->
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Activity Level" android:textColor="@color/text_main" android:textStyle="bold" android:layout_marginBottom="6dp"/>
+        <Spinner android:id="@+id/spinner_activity" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@drawable/bg_input" android:padding="14dp" android:layout_marginBottom="14dp"/>
+
+        <!-- Diet -->
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Dietary Preference" android:textColor="@color/text_main" android:textStyle="bold" android:layout_marginBottom="6dp"/>
+        <Spinner android:id="@+id/spinner_diet" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@drawable/bg_input" android:padding="14dp" android:layout_marginBottom="14dp"/>
+
+        <!-- Goal -->
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Fitness Goal" android:textColor="@color/text_main" android:textStyle="bold" android:layout_marginBottom="6dp"/>
+        <Spinner android:id="@+id/spinner_goal" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@drawable/bg_input" android:padding="14dp" android:layout_marginBottom="14dp"/>
+
+        <!-- Cuisine -->
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Favourite Cuisine" android:textColor="@color/text_main" android:textStyle="bold" android:layout_marginBottom="6dp"/>
+        <Spinner android:id="@+id/spinner_cuisine" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@drawable/bg_input" android:padding="14dp" android:layout_marginBottom="24dp"/>
+
+        <ProgressBar android:id="@+id/progress_bar" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center_horizontal" android:visibility="gone" android:layout_marginBottom="8dp"/>
+
+        <Button
+            android:id="@+id/btn_register"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Create Account"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/primary"
+            android:padding="14dp"
+            android:textSize="16sp"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:id="@+id/tv_login_link"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Already have an account? Sign In"
+            android:textColor="@color/primary"
+            android:textSize="14sp"
+            android:layout_gravity="center_horizontal"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_marginBottom="16dp" />
+
+    </LinearLayout>
+</ScrollView>

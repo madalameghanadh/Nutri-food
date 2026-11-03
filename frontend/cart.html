@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Healthy Cart - NutriRoute Delivery</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .cart-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .cart-table th {
+            text-align: left;
+            padding: 1rem;
+            border-bottom: 2px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .cart-table td {
+            padding: 1.25rem 1rem;
+            border-bottom: 1px solid var(--border-color);
+            vertical-align: middle;
+        }
+        .cart-item-img {
+            width: 70px;
+            height: 70px;
+            border-radius: var(--radius-sm);
+            object-fit: cover;
+        }
+        .qty-stepper {
+            display: inline-flex;
+            align-items: center;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            background: var(--bg-card);
+        }
+        .qty-btn {
+            background: none;
+            border: none;
+            padding: 0.4rem 0.8rem;
+            cursor: pointer;
+            color: var(--text-main);
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        .qty-btn:hover {
+            background: var(--bg-card-hover);
+            color: var(--primary);
+        }
+        .qty-value {
+            padding: 0 0.5rem;
+            font-weight: 600;
+            min-width: 25px;
+            text-align: center;
+        }
+        .summary-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            position: sticky;
+            top: 5rem;
+        }
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.85rem;
+            font-size: 0.95rem;
+        }
+        .summary-total {
+            border-top: 2px dashed var(--border-color);
+            padding-top: 1rem;
+            margin-top: 1rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-wrapper">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="dashboard.html" class="brand-logo">
+                    <i class="fa-solid fa-leaf"></i>
+                    <span>NutriRoute<span class="ai-spark"><i class="fa-solid fa-sparkles"></i></span></span>
+                </a>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-label">NutriRoute System</div>
+                <a href="dashboard.html" class="nav-link"><i class="fa-solid fa-house"></i> <span>Dashboard</span></a>
+                <a href="recommendations.html" class="nav-link"><i class="fa-solid fa-wand-magic-sparkles"></i> <span>AI Food Recommendations</span></a>
+                <a href="cart.html" class="nav-link active"><i class="fa-solid fa-cart-shopping"></i> <span>Healthy Cart</span> <span class="badge badge-primary cart-count-badge" style="margin-left:auto; display:none;">0</span></a>
+                <a href="orders.html" class="nav-link"><i class="fa-solid fa-truck-fast"></i> <span>My Orders & Tracking</span></a>
+                <a href="health.html" class="nav-link"><i class="fa-solid fa-heart-pulse"></i> <span>Health & Nutrition</span></a>
+                <a href="meal-planner.html" class="nav-link"><i class="fa-solid fa-calendar-days"></i> <span>Meal Planner</span></a>
+                <a href="bmi.html" class="nav-link"><i class="fa-solid fa-scale-balanced"></i> <span>BMI Calculator</span></a>
+                <a href="water.html" class="nav-link"><i class="fa-solid fa-droplet"></i> <span>Water Tracker</span></a>
+                <a href="fitness.html" class="nav-link"><i class="fa-solid fa-person-running"></i> <span>Fitness Tracker</span></a>
+                <a href="favorites.html" class="nav-link"><i class="fa-solid fa-heart"></i> <span>Favorites</span></a>
+                <a href="profile.html" class="nav-link"><i class="fa-solid fa-user"></i> <span>My Profile</span></a>
+                <a href="#" onclick="AuthService.logout()" class="nav-link text-danger" style="margin-top:auto;"><i class="fa-solid fa-right-from-bracket"></i> <span>Logout</span></a>
+            </nav>
+        </aside>
+
+        <!-- Topbar -->
+        <header class="topbar">
+            <div class="topbar-left">
+                <button class="sidebar-toggle" title="Toggle Navigation"><i class="fa-solid fa-bars"></i></button>
+            </div>
+            <div class="topbar-right">
+                <a href="cart.html" class="btn btn-outline" style="padding:0.4rem 0.8rem; margin-right:0.75rem;">
+                    <i class="fa-solid fa-cart-shopping"></i> <span class="cart-count-badge badge badge-primary" style="display:none;">0</span>
+                </a>
+                <div class="user-menu" onclick="window.location.href='profile.html'">
+                    <div class="user-avatar current-user-avatar">US</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div style="margin-bottom:2rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+                <div>
+                    <h2><i class="fa-solid fa-cart-shopping text-primary"></i> Your Healthy Food Cart</h2>
+                    <p class="text-muted" style="font-size:0.9rem;">Review selected wholesome dishes, calculated calories, and proceed to swift doorstep delivery.</p>
+                </div>
+                <button onclick="CartService.clear(); renderCart();" class="btn btn-outline text-danger" id="clear-cart-btn" style="display:none;">
+                    <i class="fa-solid fa-trash-can"></i> Clear Cart
+                </button>
+            </div>
+
+            <!-- Empty Cart State -->
+            <div id="empty-cart-view" class="card text-center" style="padding:4rem 2rem; display:none;">
+                <div style="font-size:4rem; color:var(--text-muted); margin-bottom:1.5rem;"><i class="fa-solid fa-basket-shopping"></i></div>
+                <h3 style="margin-bottom:0.5rem;">Your Cart is Empty</h3>
+                <p class="text-muted" style="max-width:400px; margin:0 auto 1.5rem;">Explore AI recommendations customized for your health goals and add delicious meals to your cart.</p>
+                <div>
+                    <a href="recommendations.html" class="btn btn-primary"><i class="fa-solid fa-wand-magic-sparkles"></i> Explore Food Recommendations</a>
+                </div>
+            </div>
+
+            <!-- Cart Content Grid -->
+            <div id="cart-content-view" style="display:grid; grid-template-columns:1fr 360px; gap:2rem; align-items:start;">
+                <!-- Cart Items List -->
+                <div class="card" style="padding:1.5rem; overflow-x:auto;">
+                    <table class="cart-table">
+                        <thead>
+                            <tr>
+                                <th>Meal</th>
+                                <th>Calories & Macros</th>
+                                <th>Unit Price</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="cart-items-tbody">
+                            <!-- Populated dynamically via JS -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Order Summary & Health Breakdown -->
+                <div>
+                    <div class="summary-card">
+                        <h4 style="margin-bottom:1.25rem; border-bottom:1px solid var(--border-color); padding-bottom:0.75rem;">
+                            <i class="fa-solid fa-receipt text-primary"></i> Order Summary
+                        </h4>
+
+                        <!-- Nutrition Badge -->
+                        <div style="background:rgba(16, 185, 129, 0.1); border:1px solid rgba(16, 185, 129, 0.2); border-radius:var(--radius-sm); padding:0.85rem; margin-bottom:1.25rem;">
+                            <div style="font-size:0.85rem; font-weight:600; color:var(--primary); margin-bottom:0.25rem;">
+                                <i class="fa-solid fa-heart-pulse"></i> Total Nutritional Value
+                            </div>
+                            <div style="font-size:0.85rem; color:var(--text-main);" id="cart-nutrition-summary">
+                                Calories: <strong>0 kcal</strong> | Protein: <strong>0g</strong>
+                            </div>
+                        </div>
+
+                        <div class="summary-row">
+                            <span class="text-muted">Items Subtotal (<span id="summary-item-count">0</span> items)</span>
+                            <span id="summary-subtotal">₹0</span>
+                        </div>
+
+                        <div class="summary-row">
+                            <span class="text-muted">Estimated Delivery Fee</span>
+                            <span id="summary-delivery">₹40</span>
+                        </div>
+
+                        <div class="summary-row" style="font-size:0.85rem; color:var(--primary);" id="free-delivery-notice">
+                            <span><i class="fa-solid fa-gift"></i> Free delivery on orders over ₹500!</span>
+                        </div>
+
+                        <div class="summary-row summary-total">
+                            <span>To Pay</span>
+                            <span id="summary-total">₹0</span>
+                        </div>
+
+                        <div style="margin-top:1.5rem;">
+                            <a href="checkout.html" class="btn btn-primary" style="width:100%; text-align:center; padding:0.85rem; font-size:1rem;">
+                                Proceed to Checkout <i class="fa-solid fa-arrow-right" style="margin-left:0.5rem;"></i>
+                            </a>
+                            <a href="recommendations.html" class="btn btn-outline" style="width:100%; text-align:center; margin-top:0.75rem;">
+                                <i class="fa-solid fa-plus"></i> Add More Items
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/common.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/cart.js"></script>
+    <script>
+        function renderCart() {
+            const items = CartService.getItems();
+            const totals = CartService.getTotals();
+
+            const emptyView = document.getElementById('empty-cart-view');
+            const contentView = document.getElementById('cart-content-view');
+            const clearBtn = document.getElementById('clear-cart-btn');
+
+            if (items.length === 0) {
+                emptyView.style.display = 'block';
+                contentView.style.display = 'none';
+                clearBtn.style.display = 'none';
+                return;
+            }
+
+            emptyView.style.display = 'none';
+            contentView.style.display = 'grid';
+            clearBtn.style.display = 'inline-flex';
+
+            const tbody = document.getElementById('cart-items-tbody');
+            tbody.innerHTML = items.map(item => {
+                const itemTotal = (item.price || 150) * item.quantity;
+                const calTotal = (item.calories || 200) * item.quantity;
+                return `
+                    <tr>
+                        <td>
+                            <div style="display:flex; align-items:center; gap:1rem;">
+                                <img src="${item.image}" alt="${item.name}" class="cart-item-img">
+                                <div>
+                                    <div style="font-weight:600; font-size:0.95rem;">${item.name}</div>
+                                    <span class="badge ${item.diet_type === 'Vegan' ? 'badge-primary' : (item.diet_type === 'Vegetarian' ? 'badge-success' : 'badge-warning')}" style="font-size:0.75rem;">
+                                        ${item.diet_type}
+                                    </span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div style="font-size:0.875rem;"><strong>${calTotal}</strong> kcal</div>
+                            <div style="font-size:0.75rem; color:var(--text-muted);">${item.protein}g P | ${item.carbohydrates}g C</div>
+                        </td>
+                        <td>
+                            <div style="font-weight:600;">₹${item.price}</div>
+                        </td>
+                        <td>
+                            <div class="qty-stepper">
+                                <button class="qty-btn" onclick="CartService.updateQuantity('${item.id}', -1); renderCart();">-</button>
+                                <span class="qty-value">${item.quantity}</span>
+                                <button class="qty-btn" onclick="CartService.updateQuantity('${item.id}', 1); renderCart();">+</button>
+                            </div>
+                        </td>
+                        <td>
+                            <div style="font-weight:700; color:var(--primary);">₹${itemTotal}</div>
+                        </td>
+                        <td>
+                            <button onclick="CartService.removeItem('${item.id}'); renderCart();" class="btn btn-outline text-danger" style="padding:0.4rem 0.6rem; border:none;" title="Remove">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+
+            // Update Summary
+            document.getElementById('summary-item-count').textContent = totals.itemCount;
+            document.getElementById('summary-subtotal').textContent = `₹${totals.subtotal}`;
+            document.getElementById('summary-delivery').textContent = totals.deliveryFee === 0 ? 'FREE' : `₹${totals.deliveryFee}`;
+            document.getElementById('summary-total').textContent = `₹${totals.total}`;
+
+            document.getElementById('cart-nutrition-summary').innerHTML = `
+                Calories: <strong>${totals.totalCalories} kcal</strong> | Protein: <strong>${totals.totalProtein}g</strong> | Carbs: <strong>${totals.totalCarbs}g</strong>
+            `;
+
+            if (totals.subtotal >= 500) {
+                document.getElementById('free-delivery-notice').innerHTML = '<span class="text-success"><i class="fa-solid fa-circle-check"></i> Free Delivery unlocked!</span>';
+            } else {
+                document.getElementById('free-delivery-notice').innerHTML = `<span><i class="fa-solid fa-gift"></i> Add ₹${500 - totals.subtotal} more for Free Delivery!</span>`;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderCart();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hydration Tracker - NutriRoute</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <div class="app-wrapper">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="dashboard.html" class="brand-logo">
+                    <i class="fa-solid fa-leaf"></i>
+                    <span>NutriRoute<span class="ai-spark"><i class="fa-solid fa-sparkles"></i></span></span>
+                </a>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-label">Core App</div>
+                <a href="dashboard.html" class="nav-link"><i class="fa-solid fa-house"></i> <span>Dashboard</span></a>
+                <a href="recommendations.html" class="nav-link"><i class="fa-solid fa-wand-magic-sparkles"></i> <span>AI Recommendations</span></a>
+                <a href="recommendations.html" class="nav-link"><i class="fa-solid fa-utensils"></i> <span>Food Explorer</span></a>
+                <a href="meal-planner.html" class="nav-link"><i class="fa-solid fa-calendar-days"></i> <span>Meal Planner</span></a>
+
+                <div class="nav-label">Health & Trackers</div>
+                <a href="nutrition.html" class="nav-link"><i class="fa-solid fa-chart-pie"></i> <span>Nutrition Analyzer</span></a>
+                <a href="bmi.html" class="nav-link"><i class="fa-solid fa-scale-balanced"></i> <span>BMI Calculator</span></a>
+                <a href="hydration.html" class="nav-link"><i class="fa-solid fa-droplet"></i> <span>Hydration Tracker</span></a>
+                <a href="fitness.html" class="nav-link"><i class="fa-solid fa-person-running"></i> <span>Fitness Tracker</span></a>
+
+                <div class="nav-label">Personal & Logs</div>
+                <a href="favorites.html" class="nav-link"><i class="fa-solid fa-heart"></i> <span>Favorites</span></a>
+                <a href="history.html" class="nav-link"><i class="fa-solid fa-clock-rotate-left"></i> <span>History</span></a>
+                <a href="profile.html" class="nav-link"><i class="fa-solid fa-user"></i> <span>Profile</span></a>
+                <a href="settings.html" class="nav-link"><i class="fa-solid fa-gear"></i> <span>Settings</span></a>
+            </nav>
+        </aside>
+
+        <!-- Topbar -->
+        <header class="topbar">
+            <div class="topbar-left">
+                <button class="sidebar-toggle" title="Toggle Navigation"><i class="fa-solid fa-bars"></i></button>
+                <div class="topbar-search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="global-search-input" placeholder="Search foods...">
+                </div>
+            </div>
+            <div class="topbar-right">
+                <button class="icon-btn theme-toggle-btn" title="Toggle Theme"><i class="fa-solid fa-moon"></i></button>
+                <div class="user-menu" onclick="window.location.href='profile.html'">
+                    <div class="user-avatar current-user-avatar">US</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Hydration View -->
+        <main class="main-content">
+            <div style="margin-bottom:2rem;">
+                <h2>Hydration Tracker</h2>
+                <p class="text-muted" style="font-size:0.9rem;">Track your daily water intake and maintain optimal cellular hydration.</p>
+            </div>
+
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:2rem; margin-bottom:2rem;">
+                <!-- Circular Tracker Controls -->
+                <div class="card" style="text-align:center;">
+                    <h3 style="margin-bottom:1rem;"><i class="fa-solid fa-glass-water text-secondary"></i> Today's Intake</h3>
+                    
+                    <div style="position:relative; width:200px; height:200px; margin:1.5rem auto;">
+                        <svg width="200" height="200" viewBox="0 0 200 200">
+                            <circle cx="100" cy="100" r="85" fill="none" stroke="var(--bg-input)" stroke-width="16" />
+                            <circle id="water-svg-circle" cx="100" cy="100" r="85" fill="none" stroke="var(--secondary)" stroke-width="16"
+                                    stroke-dasharray="534" stroke-dashoffset="150" stroke-linecap="round"
+                                    transform="rotate(-90 100 100)" style="transition:stroke-dashoffset 0.4s ease;" />
+                        </svg>
+                        <div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%);">
+                            <h2 style="font-size:2.2rem; font-weight:800; color:var(--secondary);" id="water-display-val">1.8 L</h2>
+                            <span style="font-size:0.85rem; color:var(--text-muted);">Target: 2.5 L</span>
+                        </div>
+                    </div>
+
+                    <!-- Quick Add Action Buttons -->
+                    <div style="display:flex; justify-content:center; gap:0.75rem; flex-wrap:wrap; margin-top:1rem;">
+                        <button id="add-250-btn" class="btn btn-secondary"><i class="fa-solid fa-plus"></i> +250 ml</button>
+                        <button id="add-500-btn" class="btn btn-secondary"><i class="fa-solid fa-plus"></i> +500 ml</button>
+                        <button id="reset-water-btn" class="btn btn-outline"><i class="fa-solid fa-rotate-left"></i> Reset</button>
+                    </div>
+                </div>
+
+                <!-- Weekly History Chart Card -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fa-solid fa-chart-bar text-secondary"></i> Weekly Water Consumption</h3>
+                        <span class="badge badge-secondary">7-Day Log</span>
+                    </div>
+                    <div style="height:250px; position:relative;">
+                        <canvas id="hydrationHistoryChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Floating NutriAI Assistant Widget -->
+    <button class="chat-widget-btn" title="Ask NutriAI Assistant"><i class="fa-solid fa-robot"></i></button>
+    <div class="chat-window">
+        <div class="chat-header">
+            <h4><i class="fa-solid fa-sparkles"></i> NutriAI Assistant</h4>
+            <button class="chat-close-btn" style="background:transparent; color:#fff; border:none; cursor:pointer;"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="chat-messages">
+            <div class="chat-msg bot">Staying hydrated improves nutrient absorption! Click +250ml whenever you drink water!</div>
+        </div>
+        <div class="chat-suggestions">
+            <button class="chip-btn">Breakfast ideas</button>
+        </div>
+        <div class="chat-input-area">
+            <input type="text" id="chat-input" placeholder="Ask NutriAI..." autocomplete="off">
+            <button class="btn btn-primary btn-icon chat-send-btn"><i class="fa-solid fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <script src="js/storage.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/charts.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            updateUI();
+            ChartManager.renderHydrationChart('hydrationHistoryChart');
+
+            document.getElementById('add-250-btn').addEventListener('click', () => {
+                StorageService.addWater(250);
+                NutriApp.showToast('Added 250ml water!', 'success');
+                updateUI();
+            });
+
+            document.getElementById('add-500-btn').addEventListener('click', () => {
+                StorageService.addWater(500);
+                NutriApp.showToast('Added 500ml water!', 'success');
+                updateUI();
+            });
+
+            document.getElementById('reset-water-btn').addEventListener('click', () => {
+                StorageService.resetWater();
+                NutriApp.showToast('Reset today water log', 'info');
+                updateUI();
+            });
+        });
+
+        function updateUI() {
+            const currentL = StorageService.getTodayWater();
+            document.getElementById('water-display-val').textContent = `${currentL} L`;
+
+            const targetL = 2.5;
+            const pct = Math.min(1, currentL / targetL);
+            const circumference = 534; // 2 * pi * 85
+            const offset = circumference - (pct * circumference);
+            document.getElementById('water-svg-circle').style.strokeDashoffset = offset;
+        }
+    </script>
+</body>
+</html>

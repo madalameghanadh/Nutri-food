@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">NutriRoute</string>
+    <string name="tagline">Your Smart Route to Better Nutrition</string>
+
+    <!-- Disclaimers -->
+    <string name="disclaimer_medical">NutriRoute provides general nutrition and wellness suggestions for educational purposes. It is not a substitute for professional medical or dietary advice.</string>
+    <string name="disclaimer_bmi">BMI is a general screening measure and does not provide a medical diagnosis.</string>
+    
+    <!-- Navigation Labels -->
+    <string name="nav_home">Home</string>
+    <string name="nav_recommendations">AI Matches</string>
+    <string name="nav_explorer">Explorer</string>
+    <string name="nav_planner">Planner</string>
+    <string name="nav_profile">Profile</string>
+</resources>

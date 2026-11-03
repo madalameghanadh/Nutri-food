@@ -1,0 +1,90 @@
+/* ==========================================================================
+   NutriRoute Responsive Design Media Queries
+   Ensures seamless experience on Desktop, Laptop, Tablet, and Mobile
+   ========================================================================== */
+
+/* Laptop & Desktop Fine-tuning */
+@media (max-width: 1200px) {
+  .grid-cols-4 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Tablet (Portrait & Landscape) */
+@media (max-width: 992px) {
+  #sidebar {
+    transform: translateX(-100%);
+  }
+
+  #sidebar.mobile-open {
+    transform: translateX(0);
+    box-shadow: 10px 0 30px rgba(0, 0, 0, 0.25);
+  }
+
+  #main-content {
+    margin-left: 0 !important;
+    width: 100% !important;
+  }
+
+  .grid-cols-3, .grid-cols-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .grid-cols-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .view-container {
+    padding: 1.25rem 1rem;
+  }
+
+  .topbar {
+    padding: 0 1rem;
+  }
+}
+
+/* Mobile Devices */
+@media (max-width: 640px) {
+  .grid-cols-2, .grid-cols-3, .grid-cols-4 {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-title {
+    font-size: 2.25rem !important;
+  }
+
+  .hero-cta-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .hero-cta-buttons .btn {
+    width: 100%;
+  }
+
+  .food-card-actions {
+    flex-direction: column;
+  }
+
+  .food-card-actions .btn {
+    width: 100%;
+  }
+
+  .card {
+    padding: 1rem;
+  }
+
+  .topbar-right .user-name-text {
+    display: none;
+  }
+
+  .mobile-overlay-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 35;
+  }
+}

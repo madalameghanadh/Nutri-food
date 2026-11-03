@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bg_app"
+    android:padding="16dp">
+
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:text="📅 AI Meal Planner" android:textSize="18sp" android:textStyle="bold"
+        android:textColor="@color/text_main" android:layout_marginBottom="8dp"/>
+
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:text="Personalised daily meal plan based on your health profile"
+        android:textSize="13sp" android:textColor="@color/text_muted" android:layout_marginBottom="16dp"/>
+
+    <Button
+        android:id="@+id/btn_generate_plan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="🔄 Generate New Plan"
+        android:backgroundTint="@color/primary"
+        android:textColor="@color/white"
+        android:layout_marginBottom="12dp" />
+
+    <ProgressBar android:id="@+id/progress_bar" android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal" android:visibility="gone" android:layout_marginBottom="8dp"/>
+
+    <!-- Daily Totals -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="2dp"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:padding="12dp">
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:gravity="center">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Calories" android:textSize="11sp" android:textColor="@color/text_muted"/>
+                <TextView android:id="@+id/tv_total_calories" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="--" android:textSize="16sp" android:textStyle="bold" android:textColor="@color/primary"/>
+            </LinearLayout>
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:gravity="center">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Protein" android:textSize="11sp" android:textColor="@color/text_muted"/>
+                <TextView android:id="@+id/tv_total_protein" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="--" android:textSize="16sp" android:textStyle="bold" android:textColor="@color/secondary"/>
+            </LinearLayout>
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:gravity="center">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Carbs" android:textSize="11sp" android:textColor="@color/text_muted"/>
+                <TextView android:id="@+id/tv_total_carbs" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="--" android:textSize="16sp" android:textStyle="bold" android:textColor="@color/accent"/>
+            </LinearLayout>
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:gravity="center">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Fiber" android:textSize="11sp" android:textColor="@color/text_muted"/>
+                <TextView android:id="@+id/tv_total_fiber" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="--" android:textSize="16sp" android:textStyle="bold" android:textColor="@color/danger"/>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_meals"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:nestedScrollingEnabled="false" />
+
+</LinearLayout>

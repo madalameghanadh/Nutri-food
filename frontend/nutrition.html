@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nutrition Analyzer - NutriRoute</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <div class="app-wrapper">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="dashboard.html" class="brand-logo">
+                    <i class="fa-solid fa-leaf"></i>
+                    <span>NutriRoute<span class="ai-spark"><i class="fa-solid fa-sparkles"></i></span></span>
+                </a>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-label">Core App</div>
+                <a href="dashboard.html" class="nav-link"><i class="fa-solid fa-house"></i> <span>Dashboard</span></a>
+                <a href="recommendations.html" class="nav-link"><i class="fa-solid fa-wand-magic-sparkles"></i> <span>AI Recommendations</span></a>
+                <a href="recommendations.html" class="nav-link"><i class="fa-solid fa-utensils"></i> <span>Food Explorer</span></a>
+                <a href="meal-planner.html" class="nav-link"><i class="fa-solid fa-calendar-days"></i> <span>Meal Planner</span></a>
+
+                <div class="nav-label">Health & Trackers</div>
+                <a href="nutrition.html" class="nav-link"><i class="fa-solid fa-chart-pie"></i> <span>Nutrition Analyzer</span></a>
+                <a href="bmi.html" class="nav-link"><i class="fa-solid fa-scale-balanced"></i> <span>BMI Calculator</span></a>
+                <a href="hydration.html" class="nav-link"><i class="fa-solid fa-droplet"></i> <span>Hydration Tracker</span></a>
+                <a href="fitness.html" class="nav-link"><i class="fa-solid fa-person-running"></i> <span>Fitness Tracker</span></a>
+
+                <div class="nav-label">Personal & Logs</div>
+                <a href="favorites.html" class="nav-link"><i class="fa-solid fa-heart"></i> <span>Favorites</span></a>
+                <a href="history.html" class="nav-link"><i class="fa-solid fa-clock-rotate-left"></i> <span>History</span></a>
+                <a href="profile.html" class="nav-link"><i class="fa-solid fa-user"></i> <span>Profile</span></a>
+                <a href="settings.html" class="nav-link"><i class="fa-solid fa-gear"></i> <span>Settings</span></a>
+            </nav>
+        </aside>
+
+        <!-- Topbar -->
+        <header class="topbar">
+            <div class="topbar-left">
+                <button class="sidebar-toggle" title="Toggle Navigation"><i class="fa-solid fa-bars"></i></button>
+                <div class="topbar-search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="global-search-input" placeholder="Search foods...">
+                </div>
+            </div>
+            <div class="topbar-right">
+                <button class="icon-btn theme-toggle-btn" title="Toggle Theme"><i class="fa-solid fa-moon"></i></button>
+                <div class="user-menu" onclick="window.location.href='profile.html'">
+                    <div class="user-avatar current-user-avatar">US</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Nutrition Analyzer View -->
+        <main class="main-content">
+            <div style="margin-bottom:2rem;">
+                <h2>Nutrition Analyzer</h2>
+                <p class="text-muted" style="font-size:0.9rem;">Select multiple foods to calculate cumulative calories, protein, carbohydrates, fat, and fiber.</p>
+            </div>
+
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:2rem;">
+                <!-- Left: Food Selector & Meal Table -->
+                <div class="card">
+                    <h3 style="margin-bottom:1.25rem;"><i class="fa-solid fa-plus-circle text-primary"></i> Build Custom Meal</h3>
+                    
+                    <div style="display:flex; gap:0.5rem; margin-bottom:1.5rem;">
+                        <select id="food-select-dropdown" class="form-select" style="flex:1;">
+                            <!-- Dynamically filled with database foods -->
+                        </select>
+                        <button id="add-food-btn" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Add Food</button>
+                    </div>
+
+                    <h4 style="margin-bottom:0.75rem; font-size:1rem;">Selected Foods</h4>
+                    <div style="overflow-x:auto;">
+                        <table style="width:100%; border-collapse:collapse; font-size:0.875rem;">
+                            <thead>
+                                <tr style="border-bottom:2px solid var(--border-color); text-align:left;">
+                                    <th style="padding:0.6rem;">Food Name</th>
+                                    <th style="padding:0.6rem;">Calories</th>
+                                    <th style="padding:0.6rem;">Protein</th>
+                                    <th style="padding:0.6rem;">Carbs</th>
+                                    <th style="padding:0.6rem;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="selected-foods-tbody">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Right: Cumulative Nutrition Totals & Chart -->
+                <div>
+                    <div class="card" style="margin-bottom:1.5rem;">
+                        <h3 style="margin-bottom:1rem;"><i class="fa-solid fa-calculator text-primary"></i> Total Meal Nutrition</h3>
+                        
+                        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(100px, 1fr)); gap:0.75rem; text-align:center; margin-bottom:1.5rem;">
+                            <div style="background:var(--bg-input); padding:0.75rem; border-radius:var(--radius-md);">
+                                <span style="font-size:1.4rem; font-weight:800; color:var(--primary);" id="analyzer-cal">0</span>
+                                <span style="display:block; font-size:0.75rem; color:var(--text-muted);">Calories</span>
+                            </div>
+                            <div style="background:var(--bg-input); padding:0.75rem; border-radius:var(--radius-md);">
+                                <span style="font-size:1.4rem; font-weight:800; color:var(--secondary);" id="analyzer-protein">0g</span>
+                                <span style="display:block; font-size:0.75rem; color:var(--text-muted);">Protein</span>
+                            </div>
+                            <div style="background:var(--bg-input); padding:0.75rem; border-radius:var(--radius-md);">
+                                <span style="font-size:1.4rem; font-weight:800; color:var(--text-main);" id="analyzer-carbs">0g</span>
+                                <span style="display:block; font-size:0.75rem; color:var(--text-muted);">Carbs</span>
+                            </div>
+                            <div style="background:var(--bg-input); padding:0.75rem; border-radius:var(--radius-md);">
+                                <span style="font-size:1.4rem; font-weight:800; color:var(--accent);" id="analyzer-fat">0g</span>
+                                <span style="display:block; font-size:0.75rem; color:var(--text-muted);">Fat</span>
+                            </div>
+                            <div style="background:var(--bg-input); padding:0.75rem; border-radius:var(--radius-md);">
+                                <span style="font-size:1.4rem; font-weight:800; color:#8B5CF6;" id="analyzer-fiber">0g</span>
+                                <span style="display:block; font-size:0.75rem; color:var(--text-muted);">Fiber</span>
+                            </div>
+                        </div>
+
+                        <div style="height:200px; position:relative;">
+                            <canvas id="analyzerMacroChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Floating NutriAI Assistant Widget -->
+    <button class="chat-widget-btn" title="Ask NutriAI Assistant"><i class="fa-solid fa-robot"></i></button>
+    <div class="chat-window">
+        <div class="chat-header">
+            <h4><i class="fa-solid fa-sparkles"></i> NutriAI Assistant</h4>
+            <button class="chat-close-btn" style="background:transparent; color:#fff; border:none; cursor:pointer;"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="chat-messages">
+            <div class="chat-msg bot">Add foods to calculate total calories, protein, and carbs!</div>
+        </div>
+        <div class="chat-suggestions">
+            <button class="chip-btn">Breakfast ideas</button>
+        </div>
+        <div class="chat-input-area">
+            <input type="text" id="chat-input" placeholder="Ask NutriAI..." autocomplete="off">
+            <button class="btn btn-primary btn-icon chat-send-btn"><i class="fa-solid fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/recommendations.js"></script>
+    <script src="js/nutrition.js"></script>
+    <script src="js/charts.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        let selectedMealItems = [];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Seed default meal items (e.g. Idli, Sambar, Fruit, Curd)
+            selectedMealItems = [
+                NUTRIRoute_FOODS.find(f => f.id === 'food_1') || NUTRIRoute_FOODS[0],
+                NUTRIRoute_FOODS.find(f => f.id === 'food_15') || NUTRIRoute_FOODS[1],
+                NUTRIRoute_FOODS.find(f => f.id === 'food_21') || NUTRIRoute_FOODS[2]
+            ];
+
+            populateDropdown();
+            renderTableAndTotals();
+
+            document.getElementById('add-food-btn').addEventListener('click', () => {
+                const select = document.getElementById('food-select-dropdown');
+                const foodId = select.value;
+                const food = NUTRIRoute_FOODS.find(f => f.id === foodId);
+                if (food) {
+                    selectedMealItems.push(food);
+                    renderTableAndTotals();
+                    NutriApp.showToast(`Added ${food.name}`, 'success');
+                }
+            });
+        });
+
+        function populateDropdown() {
+            const select = document.getElementById('food-select-dropdown');
+            select.innerHTML = NUTRIRoute_FOODS.map(f => `<option value="${f.id}">${f.name} (${f.calories} kcal)</option>`).join('');
+        }
+
+        function removeFoodItem(index) {
+            selectedMealItems.splice(index, 1);
+            renderTableAndTotals();
+            NutriApp.showToast('Removed item', 'info');
+        }
+
+        function renderTableAndTotals() {
+            const tbody = document.getElementById('selected-foods-tbody');
+            if (selectedMealItems.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" class="text-muted text-center p-3">No foods added yet. Select a food above.</td></tr>`;
+            } else {
+                tbody.innerHTML = selectedMealItems.map((item, idx) => `
+                    <tr style="border-bottom:1px solid var(--border-color);">
+                        <td style="padding:0.6rem; font-weight:600;">${item.name}</td>
+                        <td style="padding:0.6rem;">${item.calories} kcal</td>
+                        <td style="padding:0.6rem;">${item.protein}g</td>
+                        <td style="padding:0.6rem;">${item.carbs}g</td>
+                        <td style="padding:0.6rem;">
+                            <button onclick="removeFoodItem(${idx})" class="btn btn-outline btn-sm text-danger" style="padding:0.2rem 0.5rem;"><i class="fa-solid fa-trash"></i></button>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+
+            const totals = NutritionService.calculateTotals(selectedMealItems);
+            document.getElementById('analyzer-cal').textContent = totals.calories;
+            document.getElementById('analyzer-protein').textContent = `${totals.protein}g`;
+            document.getElementById('analyzer-carbs').textContent = `${totals.carbs}g`;
+            document.getElementById('analyzer-fat').textContent = `${totals.fat}g`;
+            document.getElementById('analyzer-fiber').textContent = `${totals.fiber}g`;
+
+            ChartManager.renderMacroDoughnut('analyzerMacroChart', totals.protein, totals.carbs, totals.fat);
+        }
+    </script>
+</body>
+</html>

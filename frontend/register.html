@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Profile - NutriRoute</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body style="min-height:100vh; background:var(--bg-app); padding:2rem 1rem;">
+
+    <div style="width:100%; max-width:760px; margin:0 auto; background:var(--bg-card); border:1px solid var(--border-color); border-radius:var(--radius-lg); padding:2.5rem; box-shadow:var(--shadow-lg);">
+        <div style="text-align:center; margin-bottom:2rem;">
+            <a href="login.html" class="brand-logo" style="justify-content:center; margin-bottom:0.75rem;">
+                <i class="fa-solid fa-leaf"></i>
+                <span>NutriRoute<span class="ai-spark"><i class="fa-solid fa-sparkles"></i></span></span>
+            </a>
+            <h2>Create Your AI Nutrition Profile</h2>
+            <p class="text-muted" style="font-size:0.875rem;">NutriRoute engine requires your lifestyle & goal details to rank personalized recommendations.</p>
+        </div>
+
+        <div id="register-alert" style="display:none; margin-bottom:1.5rem; width:100%; text-align:center; padding:0.75rem;" class="badge badge-danger"></div>
+
+        <form id="register-form">
+            <h4 style="margin-bottom:1rem; border-bottom:1px solid var(--border-color); padding-bottom:0.5rem; color:var(--primary);">
+                <i class="fa-solid fa-user"></i> Account & Personal Info
+            </h4>
+
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:1.25rem;">
+                <div class="form-group">
+                    <label class="form-label" for="reg-name">Full Name *</label>
+                    <input type="text" id="reg-name" class="form-control" placeholder="Alex Morgan" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="reg-email">Email Address *</label>
+                    <input type="email" id="reg-email" class="form-control" placeholder="alex@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="reg-phone">Phone Number</label>
+                    <input type="tel" id="reg-phone" class="form-control" placeholder="+1 (555) 000-0000">
+                </div>
+            </div>
+
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:1.25rem;">
+                <div class="form-group">
+                    <label class="form-label" for="reg-password">Password *</label>
+                    <input type="password" id="reg-password" class="form-control" placeholder="••••••••" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="reg-confirm">Confirm Password *</label>
+                    <input type="password" id="reg-confirm" class="form-control" placeholder="••••••••" required>
+                </div>
+            </div>
+
+            <h4 style="margin:1.5rem 0 1rem; border-bottom:1px solid var(--border-color); padding-bottom:0.5rem; color:var(--primary);">
+                <i class="fa-solid fa-heart-pulse"></i> Body & Lifestyle Metrics
+            </h4>
+
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(160px, 1fr)); gap:1.25rem;">
+                <div class="form-group">
+                    <label class="form-label" for="reg-age">Age (Years) *</label>
+                    <input type="number" id="reg-age" class="form-control" value="26" min="10" max="100" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="reg-gender">Gender</label>
+                    <select id="reg-gender" class="form-control">
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="reg-height">Height (cm) *</label>
+                    <input type="number" id="reg-height" class="form-control" value="172" min="100" max="250" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="reg-weight">Weight (kg) *</label>
+                    <input type="number" id="reg-weight" class="form-control" value="68" min="30" max="250" required>
+                </div>
+            </div>
+
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:1.25rem; margin-top:1rem;">
+                <div class="form-group">
+                    <label class="form-label" for="reg-activity">Activity Level</label>
+                    <select id="reg-activity" class="form-control">
+                        <option value="Sedentary">Sedentary (Little or no exercise)</option>
+                        <option value="Lightly Active">Lightly Active (1-3 days/week)</option>
+                        <option value="Moderately Active" selected>Moderately Active (3-5 days/week)</option>
+                        <option value="Very Active">Very Active (6-7 days/week)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="reg-diet">Dietary Preference</label>
+                    <select id="reg-diet" class="form-control">
+                        <option value="Vegetarian" selected>Vegetarian</option>
+                        <option value="Vegan">Vegan</option>
+                        <option value="Non-Vegetarian">Non-Vegetarian</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group" style="margin-top:1rem;">
+                <label class="form-label">Food Allergies (Select all that apply)</label>
+                <div style="display:flex; flex-wrap:wrap; gap:1rem; padding:0.5rem 0;">
+                    <label style="display:flex; align-items:center; gap:0.4rem; font-size:0.9rem;">
+                        <input type="checkbox" name="allergies" value="dairy"> Dairy / Lactose
+                    </label>
+                    <label style="display:flex; align-items:center; gap:0.4rem; font-size:0.9rem;">
+                        <input type="checkbox" name="allergies" value="peanuts"> Peanuts
+                    </label>
+                    <label style="display:flex; align-items:center; gap:0.4rem; font-size:0.9rem;">
+                        <input type="checkbox" name="allergies" value="tree-nuts"> Tree Nuts
+                    </label>
+                    <label style="display:flex; align-items:center; gap:0.4rem; font-size:0.9rem;">
+                        <input type="checkbox" name="allergies" value="gluten"> Gluten
+                    </label>
+                    <label style="display:flex; align-items:center; gap:0.4rem; font-size:0.9rem;">
+                        <input type="checkbox" name="allergies" value="soy"> Soy
+                    </label>
+                    <label style="display:flex; align-items:center; gap:0.4rem; font-size:0.9rem;">
+                        <input type="checkbox" name="allergies" value="egg"> Egg
+                    </label>
+                    <label style="display:flex; align-items:center; gap:0.4rem; font-size:0.9rem;">
+                        <input type="checkbox" name="allergies" value="fish"> Fish / Seafood
+                    </label>
+                </div>
+            </div>
+
+            <button type="submit" id="reg-submit-btn" class="btn btn-primary" style="width:100%; padding:0.85rem; margin-top:1.5rem; font-size:1rem;">
+                <i class="fa-solid fa-user-plus"></i> Create My Account
+            </button>
+        </form>
+
+        <div style="margin-top:1.5rem; padding-top:1.25rem; border-top:1px solid var(--border-color); text-align:center;">
+            <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:0.5rem;">Already registered?</p>
+            <a href="login.html" class="btn btn-outline">Back to Login</a>
+        </div>
+    </div>
+
+    <script src="js/common.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('register-form');
+            const alertBox = document.getElementById('register-alert');
+            const submitBtn = document.getElementById('reg-submit-btn');
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                alertBox.style.display = 'none';
+
+                const password = document.getElementById('reg-password').value;
+                const confirm = document.getElementById('reg-confirm').value;
+
+                if (password !== confirm) {
+                    alertBox.textContent = 'Passwords do not match.';
+                    alertBox.style.display = 'block';
+                    return;
+                }
+
+                const allergyBoxes = document.querySelectorAll('input[name="allergies"]:checked');
+                const allergies = Array.from(allergyBoxes).map(cb => cb.value);
+
+                const userData = {
+                    name: document.getElementById('reg-name').value,
+                    email: document.getElementById('reg-email').value,
+                    phone: document.getElementById('reg-phone')?.value || null,
+                    password: password,
+                    age: document.getElementById('reg-age').value,
+                    gender: document.getElementById('reg-gender').value,
+                    height: document.getElementById('reg-height').value,
+                    weight: document.getElementById('reg-weight').value,
+                    activityLevel: document.getElementById('reg-activity').value,
+                    dietPreference: document.getElementById('reg-diet').value,
+                    allergies
+                };
+
+                NutriCommon.setLoading(submitBtn, true, 'Creating profile...');
+
+                const result = await AuthService.register(userData);
+
+                NutriCommon.setLoading(submitBtn, false);
+
+                if (result.success) {
+                    NutriCommon.showToast('Account created successfully!', 'success');
+                    setTimeout(() => {
+                        window.location.href = 'dashboard.html';
+                    }, 800);
+                } else {
+                    alertBox.textContent = result.message || 'Registration failed.';
+                    alertBox.style.display = 'block';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_app">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Greeting Header -->
+        <TextView
+            android:id="@+id/tv_greeting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hello! 👋"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="@color/text_main"
+            android:layout_marginBottom="4dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Here's your health snapshot today"
+            android:textSize="13sp"
+            android:textColor="@color/text_muted"
+            android:layout_marginBottom="20dp" />
+
+        <!-- Stats Row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp">
+
+            <!-- BMI Card -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp"
+                xmlns:app="http://schemas.android.com/apk/res-auto">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="vertical" android:padding="14dp">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="⚖️ BMI" android:textColor="@color/primary" android:textStyle="bold" android:textSize="12sp"/>
+                    <TextView android:id="@+id/tv_bmi_value" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="22.4" android:textSize="22sp" android:textStyle="bold" android:textColor="@color/text_main"/>
+                    <TextView android:id="@+id/tv_bmi_category" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Normal" android:textSize="11sp" android:textColor="@color/text_muted"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Water Card -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp"
+                xmlns:app="http://schemas.android.com/apk/res-auto">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="vertical" android:padding="14dp">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="💧 Water" android:textColor="@color/secondary" android:textStyle="bold" android:textSize="12sp"/>
+                    <TextView android:id="@+id/tv_water_value" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="--" android:textSize="16sp" android:textStyle="bold" android:textColor="@color/text_main"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Today" android:textSize="11sp" android:textColor="@color/text_muted"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Calories Card -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp"
+                xmlns:app="http://schemas.android.com/apk/res-auto">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="vertical" android:padding="14dp">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🔥 Calories" android:textColor="@color/accent" android:textStyle="bold" android:textSize="12sp"/>
+                    <TextView android:id="@+id/tv_calories_value" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="--" android:textSize="16sp" android:textStyle="bold" android:textColor="@color/text_main"/>
+                    <TextView android:id="@+id/tv_steps_value" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="-- steps" android:textSize="11sp" android:textColor="@color/text_muted"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+
+        <!-- Quick Actions -->
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="Quick Actions" android:textSize="16sp" android:textStyle="bold" android:textColor="@color/text_main" android:layout_marginBottom="12dp"/>
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginBottom="20dp">
+            <Button android:id="@+id/btn_bmi" android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:text="BMI" android:textSize="12sp" android:backgroundTint="@color/primary_light" android:textColor="@color/primary" android:layout_marginEnd="8dp"/>
+            <Button android:id="@+id/btn_water" android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:text="Water" android:textSize="12sp" android:backgroundTint="@color/secondary_light" android:textColor="@color/secondary" android:layout_marginEnd="8dp"/>
+            <Button android:id="@+id/btn_fitness" android:layout_width="0dp" android:layout_height="wrap_content"
+                android:layout_weight="1" android:text="Fitness" android:textSize="12sp" android:backgroundTint="@color/accent_light" android:textColor="@color/accent"/>
+        </LinearLayout>
+
+        <!-- Top AI Picks -->
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="🤖 Top AI Picks For You" android:textSize="16sp" android:textStyle="bold" android:textColor="@color/text_main" android:layout_marginBottom="12dp"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_top_picks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false" />
+
+    </LinearLayout>
+</ScrollView>

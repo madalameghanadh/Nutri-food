@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - NutriRoute</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="app-wrapper">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="dashboard.html" class="brand-logo">
+                    <i class="fa-solid fa-leaf"></i>
+                    <span>NutriRoute<span class="ai-spark"><i class="fa-solid fa-sparkles"></i></span></span>
+                </a>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-label">NutriRoute</div>
+                <a href="dashboard.html" class="nav-link"><i class="fa-solid fa-house"></i> <span>Dashboard</span></a>
+                <a href="recommendations.html" class="nav-link"><i class="fa-solid fa-wand-magic-sparkles"></i> <span>AI Food Recommendations</span></a>
+                <a href="health.html" class="nav-link"><i class="fa-solid fa-heart-pulse"></i> <span>Health & Nutrition</span></a>
+                <a href="meal-planner.html" class="nav-link"><i class="fa-solid fa-calendar-days"></i> <span>Meal Planner</span></a>
+                <a href="bmi.html" class="nav-link"><i class="fa-solid fa-scale-balanced"></i> <span>BMI Calculator</span></a>
+                <a href="water.html" class="nav-link"><i class="fa-solid fa-droplet"></i> <span>Water Tracker</span></a>
+                <a href="fitness.html" class="nav-link"><i class="fa-solid fa-person-running"></i> <span>Fitness Tracker</span></a>
+                <a href="favorites.html" class="nav-link"><i class="fa-solid fa-heart"></i> <span>Favorites</span></a>
+                <a href="history.html" class="nav-link"><i class="fa-solid fa-clock-rotate-left"></i> <span>Recommendation History</span></a>
+                <a href="profile.html" class="nav-link"><i class="fa-solid fa-user"></i> <span>My Profile</span></a>
+                <a href="settings.html" class="nav-link active"><i class="fa-solid fa-gear"></i> <span>Settings</span></a>
+            </nav>
+        </aside>
+
+        <!-- Topbar -->
+        <header class="topbar">
+            <div class="topbar-left">
+                <button class="sidebar-toggle" title="Toggle Navigation"><i class="fa-solid fa-bars"></i></button>
+            </div>
+            <div class="topbar-right">
+                <div class="user-menu" onclick="window.location.href='profile.html'">
+                    <div class="user-avatar current-user-avatar">US</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Settings View -->
+        <main class="main-content">
+            <div style="margin-bottom:2rem;">
+                <h2>Settings & Security</h2>
+                <p class="text-muted" style="font-size:0.9rem;">Manage security, change account password, or delete your profile data.</p>
+            </div>
+
+            <!-- Password Form -->
+            <div class="card" style="margin-bottom:2rem;">
+                <form id="change-password-form">
+                    <h3 style="margin-bottom:1.25rem; color:var(--primary);"><i class="fa-solid fa-lock"></i> Security & Password</h3>
+                    
+                    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:1.25rem;">
+                        <div class="form-group">
+                            <label class="form-label" for="new-password">New Password</label>
+                            <input type="password" id="new-password" class="form-control" placeholder="Minimum 6 characters" required minlength="6">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="confirm-password">Confirm New Password</label>
+                            <input type="password" id="confirm-password" class="form-control" placeholder="Re-enter new password" required minlength="6">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="margin-top:1rem; padding:0.75rem 1.5rem;">
+                        <i class="fa-solid fa-key"></i> Update Password
+                    </button>
+                </form>
+            </div>
+
+            <!-- Security & Danger Zone -->
+            <div class="card" style="border-color:#fca5a5; background:rgba(254, 242, 242, 0.4);">
+                <h3 style="margin-bottom:0.75rem; color:#dc2626;"><i class="fa-solid fa-triangle-exclamation"></i> Danger Zone</h3>
+                <p style="font-size:0.875rem; color:var(--text-muted); margin-bottom:1.25rem;">
+                    Permanently delete your NutriRoute account and all associated health records, tracker logs, favorites, meal plans, and recommendation history.
+                </p>
+
+                <div style="display:flex; gap:1rem; flex-wrap:wrap;">
+                    <button onclick="AuthService.logout()" class="btn btn-outline">
+                        <i class="fa-solid fa-right-from-bracket"></i> Logout Session
+                    </button>
+                    <button id="delete-account-btn" class="btn" style="background:#dc2626; color:#fff;">
+                        <i class="fa-solid fa-trash-can"></i> Permanently Delete Account
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/common.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/settings.js"></script>
+</body>
+</html>

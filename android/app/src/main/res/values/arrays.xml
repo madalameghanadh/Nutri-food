@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="genders">
+        <item>Male</item>
+        <item>Female</item>
+        <item>Other</item>
+        <item>Prefer not to say</item>
+    </string-array>
+
+    <string-array name="activity_levels">
+        <item>Sedentary (little or no exercise)</item>
+        <item>Lightly Active (1–3 days/week)</item>
+        <item>Moderately Active (3–5 days/week)</item>
+        <item>Very Active (6–7 days/week)</item>
+        <item>Extra Active (physical job)</item>
+    </string-array>
+
+    <string-array name="diet_types">
+        <item>No Preference</item>
+        <item>Vegetarian</item>
+        <item>Vegan</item>
+        <item>Non-Vegetarian</item>
+        <item>Pescatarian</item>
+        <item>Keto</item>
+        <item>Paleo</item>
+        <item>Gluten-Free</item>
+        <item>Lactose-Free</item>
+    </string-array>
+
+    <string-array name="fitness_goals">
+        <item>Weight Loss</item>
+        <item>Muscle Gain</item>
+        <item>Maintain Weight</item>
+        <item>Improve Stamina</item>
+        <item>General Health</item>
+        <item>Manage Diabetes</item>
+        <item>Heart Health</item>
+    </string-array>
+
+    <string-array name="cuisines">
+        <item>No Preference</item>
+        <item>Indian</item>
+        <item>Mediterranean</item>
+        <item>Asian</item>
+        <item>Mexican</item>
+        <item>Italian</item>
+        <item>American</item>
+        <item>Japanese</item>
+        <item>Middle Eastern</item>
+    </string-array>
+
+    <string-array name="food_categories">
+        <item>All</item>
+        <item>Breakfast</item>
+        <item>Lunch</item>
+        <item>Dinner</item>
+        <item>Snack</item>
+        <item>Salad</item>
+        <item>Soup</item>
+        <item>Smoothie</item>
+        <item>Dessert</item>
+    </string-array>
+
+    <string-array name="sort_options">
+        <item>Match Score</item>
+        <item>Calories (Low)</item>
+        <item>Protein (High)</item>
+        <item>Fiber (High)</item>
+    </string-array>
+</resources>

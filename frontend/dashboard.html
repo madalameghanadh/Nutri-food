@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - NutriRoute</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <div class="app-wrapper">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="dashboard.html" class="brand-logo">
+                    <i class="fa-solid fa-leaf"></i>
+                    <span>NutriRoute<span class="ai-spark"><i class="fa-solid fa-sparkles"></i></span></span>
+                </a>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-label">NutriRoute System</div>
+                <a href="dashboard.html" class="nav-link active"><i class="fa-solid fa-house"></i> <span>Dashboard</span></a>
+                <a href="recommendations.html" class="nav-link"><i class="fa-solid fa-wand-magic-sparkles"></i> <span>AI Food Recommendations</span></a>
+                <a href="cart.html" class="nav-link"><i class="fa-solid fa-cart-shopping"></i> <span>Healthy Cart</span> <span class="badge badge-primary cart-count-badge" style="margin-left:auto; display:none;">0</span></a>
+                <a href="orders.html" class="nav-link"><i class="fa-solid fa-truck-fast"></i> <span>My Orders & Tracking</span></a>
+                <a href="health.html" class="nav-link"><i class="fa-solid fa-heart-pulse"></i> <span>Health & Nutrition</span></a>
+                <a href="meal-planner.html" class="nav-link"><i class="fa-solid fa-calendar-days"></i> <span>Meal Planner</span></a>
+                <a href="bmi.html" class="nav-link"><i class="fa-solid fa-scale-balanced"></i> <span>BMI Calculator</span></a>
+                <a href="water.html" class="nav-link"><i class="fa-solid fa-droplet"></i> <span>Water Tracker</span></a>
+                <a href="fitness.html" class="nav-link"><i class="fa-solid fa-person-running"></i> <span>Fitness Tracker</span></a>
+                <a href="favorites.html" class="nav-link"><i class="fa-solid fa-heart"></i> <span>Favorites</span></a>
+                <a href="history.html" class="nav-link"><i class="fa-solid fa-clock-rotate-left"></i> <span>Recommendation History</span></a>
+                <a href="profile.html" class="nav-link"><i class="fa-solid fa-user"></i> <span>My Profile</span></a>
+                <a href="settings.html" class="nav-link"><i class="fa-solid fa-gear"></i> <span>Settings</span></a>
+                <a href="#" onclick="AuthService.logout()" class="nav-link text-danger" style="margin-top:auto;"><i class="fa-solid fa-right-from-bracket"></i> <span>Logout</span></a>
+            </nav>
+        </aside>
+
+        <!-- Topbar -->
+        <header class="topbar">
+            <div class="topbar-left">
+                <button class="sidebar-toggle" title="Toggle Navigation"><i class="fa-solid fa-bars"></i></button>
+            </div>
+            <div class="topbar-right">
+                <a href="cart.html" class="btn btn-outline" style="padding:0.4rem 0.8rem; margin-right:0.75rem;">
+                    <i class="fa-solid fa-cart-shopping"></i> <span class="cart-count-badge badge badge-primary" style="display:none;">0</span>
+                </a>
+                <div class="user-menu" onclick="window.location.href='profile.html'">
+                    <div class="user-avatar current-user-avatar">US</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Dashboard Content -->
+        <main class="main-content">
+            <!-- Welcome Header -->
+            <div style="margin-bottom:2rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+                <div>
+                    <h2>Good Morning, <span id="user-greeting-name" style="color:var(--primary);">User</span> 👋</h2>
+                    <p class="text-muted" style="font-size:0.9rem;">Here is your personalized real-time health overview for today.</p>
+                </div>
+                <a href="recommendations.html" class="btn btn-primary">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> AI Recommendations
+                </a>
+            </div>
+
+            <!-- Stat Cards -->
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:1.25rem; margin-bottom:2rem;">
+                <div class="card" style="border-left:4px solid var(--primary);">
+                    <span style="font-size:0.8rem; color:var(--text-muted); font-weight:600; text-transform:uppercase;">BMI</span>
+                    <h3 id="dash-bmi-value" style="font-size:1.8rem; margin:0.4rem 0 0.2rem; color:var(--text-main);">22.5</h3>
+                    <span id="dash-bmi-category" class="badge badge-success">Normal Range</span>
+                </div>
+
+                <div class="card" style="border-left:4px solid #10b981;">
+                    <span style="font-size:0.8rem; color:var(--text-muted); font-weight:600; text-transform:uppercase;">Daily Calories</span>
+                    <h3 id="dash-calorie-value" style="font-size:1.8rem; margin:0.4rem 0 0.2rem; color:var(--text-main);">2000 kcal</h3>
+                    <span class="badge badge-secondary">Target</span>
+                </div>
+
+                <div class="card" style="border-left:4px solid #0ea5e9;">
+                    <span style="font-size:0.8rem; color:var(--text-muted); font-weight:600; text-transform:uppercase;">Water Intake</span>
+                    <h3 id="dash-water-value" style="font-size:1.8rem; margin:0.4rem 0 0.2rem; color:var(--text-main);">0 / 8 glasses</h3>
+                    <span class="badge badge-secondary">Today</span>
+                </div>
+
+                <div class="card" style="border-left:4px solid #f59e0b;">
+                    <span style="font-size:0.8rem; color:var(--text-muted); font-weight:600; text-transform:uppercase;">Fitness Activity</span>
+                    <h3 id="dash-steps-value" style="font-size:1.8rem; margin:0.4rem 0 0.2rem; color:var(--text-main);">0 steps</h3>
+                    <span class="badge badge-secondary">Daily Goal</span>
+                </div>
+            </div>
+
+            <!-- Top AI Recommendations -->
+            <div class="card" style="margin-bottom:2rem;">
+                <div class="card-header" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+                    <h3><i class="fa-solid fa-sparkles text-primary"></i> Top Personalized Recommendations</h3>
+                    <a href="recommendations.html" style="font-size:0.85rem; color:var(--primary); font-weight:600;">View All →</a>
+                </div>
+                <div id="dashboard-recommendations-list">
+                    <p class="text-muted">Loading recommendations...</p>
+                </div>
+            </div>
+
+            <!-- Charts Section -->
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:1.5rem;">
+                <div class="card">
+                    <h4 style="margin-bottom:1rem;"><i class="fa-solid fa-droplet text-secondary"></i> Weekly Water Intake</h4>
+                    <div style="height:220px; position:relative;">
+                        <canvas id="dashWaterChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h4 style="margin-bottom:1rem;"><i class="fa-solid fa-person-running text-success"></i> Weekly Fitness Activity</h4>
+                    <div style="height:220px; position:relative;">
+                        <canvas id="dashFitnessChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/common.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

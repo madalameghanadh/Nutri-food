@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Orders & Tracking - NutriRoute Delivery</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .order-card {
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            background: var(--bg-card);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: var(--transition);
+        }
+        .order-card:hover {
+            box-shadow: var(--shadow-sm);
+        }
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1rem;
+            margin-bottom: 1rem;
+        }
+        .order-items-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.25rem;
+        }
+        .order-item-thumb {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: var(--bg-card-hover);
+            padding: 0.75rem;
+            border-radius: var(--radius-sm);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-wrapper">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <a href="dashboard.html" class="brand-logo">
+                    <i class="fa-solid fa-leaf"></i>
+                    <span>NutriRoute<span class="ai-spark"><i class="fa-solid fa-sparkles"></i></span></span>
+                </a>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-label">NutriRoute System</div>
+                <a href="dashboard.html" class="nav-link"><i class="fa-solid fa-house"></i> <span>Dashboard</span></a>
+                <a href="recommendations.html" class="nav-link"><i class="fa-solid fa-wand-magic-sparkles"></i> <span>AI Food Recommendations</span></a>
+                <a href="cart.html" class="nav-link"><i class="fa-solid fa-cart-shopping"></i> <span>Healthy Cart</span> <span class="badge badge-primary cart-count-badge" style="margin-left:auto; display:none;">0</span></a>
+                <a href="orders.html" class="nav-link active"><i class="fa-solid fa-truck-fast"></i> <span>My Orders & Tracking</span></a>
+                <a href="health.html" class="nav-link"><i class="fa-solid fa-heart-pulse"></i> <span>Health & Nutrition</span></a>
+                <a href="meal-planner.html" class="nav-link"><i class="fa-solid fa-calendar-days"></i> <span>Meal Planner</span></a>
+                <a href="bmi.html" class="nav-link"><i class="fa-solid fa-scale-balanced"></i> <span>BMI Calculator</span></a>
+                <a href="water.html" class="nav-link"><i class="fa-solid fa-droplet"></i> <span>Water Tracker</span></a>
+                <a href="fitness.html" class="nav-link"><i class="fa-solid fa-person-running"></i> <span>Fitness Tracker</span></a>
+                <a href="favorites.html" class="nav-link"><i class="fa-solid fa-heart"></i> <span>Favorites</span></a>
+                <a href="profile.html" class="nav-link"><i class="fa-solid fa-user"></i> <span>My Profile</span></a>
+                <a href="#" onclick="AuthService.logout()" class="nav-link text-danger" style="margin-top:auto;"><i class="fa-solid fa-right-from-bracket"></i> <span>Logout</span></a>
+            </nav>
+        </aside>
+
+        <!-- Topbar -->
+        <header class="topbar">
+            <div class="topbar-left">
+                <button class="sidebar-toggle" title="Toggle Navigation"><i class="fa-solid fa-bars"></i></button>
+            </div>
+            <div class="topbar-right">
+                <a href="cart.html" class="btn btn-outline" style="padding:0.4rem 0.8rem; margin-right:0.75rem;">
+                    <i class="fa-solid fa-cart-shopping"></i> <span class="cart-count-badge badge badge-primary" style="display:none;">0</span>
+                </a>
+                <div class="user-menu" onclick="window.location.href='profile.html'">
+                    <div class="user-avatar current-user-avatar">US</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div style="margin-bottom:2rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+                <div>
+                    <h2><i class="fa-solid fa-truck-fast text-primary"></i> My Delivery Orders</h2>
+                    <p class="text-muted" style="font-size:0.9rem;">Track active deliveries in real-time, view order history, and reorder nutritious meals.</p>
+                </div>
+                <a href="recommendations.html" class="btn btn-primary">
+                    <i class="fa-solid fa-plus"></i> Order New Meal
+                </a>
+            </div>
+
+            <!-- Loading Spinner -->
+            <div id="orders-loading" class="text-center" style="padding:3rem;">
+                <div class="spinner"></div>
+                <p class="text-muted" style="margin-top:1rem;">Fetching your orders...</p>
+            </div>
+
+            <!-- Empty State -->
+            <div id="orders-empty" class="card text-center" style="padding:4rem 2rem; display:none;">
+                <div style="font-size:3.5rem; color:var(--text-muted); margin-bottom:1rem;"><i class="fa-solid fa-receipt"></i></div>
+                <h3>No Orders Placed Yet</h3>
+                <p class="text-muted" style="max-width:400px; margin:0 auto 1.5rem;">You haven't ordered any nutritious meals yet. Try out AI recommendations to order your first wholesome dish!</p>
+                <a href="recommendations.html" class="btn btn-primary"><i class="fa-solid fa-wand-magic-sparkles"></i> Explore Food Recommendations</a>
+            </div>
+
+            <!-- Orders Container -->
+            <div id="orders-container" style="display:none;">
+                <!-- Populated via JS -->
+            </div>
+        </main>
+    </div>
+
+    <script src="js/common.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/orders.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const loading = document.getElementById('orders-loading');
+            const emptyState = document.getElementById('orders-empty');
+            const container = document.getElementById('orders-container');
+
+            try {
+                const res = await OrderService.getOrders();
+                loading.style.display = 'none';
+
+                if (!res.success || !res.orders || res.orders.length === 0) {
+                    emptyState.style.display = 'block';
+                    return;
+                }
+
+                container.style.display = 'block';
+                container.innerHTML = res.orders.map(order => {
+                    const dateStr = new Date(order.created_at).toLocaleDateString('en-US', {
+                        year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
+                    });
+
+                    const isDelivered = order.order_status === 'Delivered';
+                    const isCancelled = order.order_status === 'Cancelled';
+                    const statusClass = isDelivered ? 'badge-success' : (isCancelled ? 'badge-danger' : 'badge-primary');
+
+                    const itemsList = Array.isArray(order.items) ? order.items : [];
+
+                    return `
+                        <div class="order-card">
+                            <div class="order-header">
+                                <div>
+                                    <span style="font-weight:700; font-size:1.1rem; color:var(--text-main); margin-right:0.75rem;">
+                                        Order #${order.order_number}
+                                    </span>
+                                    <span class="badge ${statusClass}">
+                                        <i class="fa-solid ${isDelivered ? 'fa-check' : (isCancelled ? 'fa-ban' : 'fa-spinner fa-spin')}"></i> ${order.order_status}
+                                    </span>
+                                    <div style="font-size:0.8rem; color:var(--text-muted); margin-top:0.25rem;">
+                                        Placed on ${dateStr}
+                                    </div>
+                                </div>
+                                <div style="text-align:right;">
+                                    <div style="font-size:1.25rem; font-weight:700; color:var(--primary);">₹${order.total_amount}</div>
+                                    <div style="font-size:0.8rem; color:var(--text-muted);">${order.total_calories || 0} kcal total</div>
+                                </div>
+                            </div>
+
+                            <div class="order-items-grid">
+                                ${itemsList.map(item => `
+                                    <div class="order-item-thumb">
+                                        <img src="${item.image || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=600'}" alt="${item.name}" style="width:48px; height:48px; border-radius:var(--radius-sm); object-fit:cover;">
+                                        <div>
+                                            <div style="font-weight:600; font-size:0.875rem;">${item.name}</div>
+                                            <div style="font-size:0.75rem; color:var(--text-muted);">${item.quantity}x • ₹${item.price} • ${item.calories} kcal</div>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+
+                            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; border-top:1px solid var(--border-color); padding-top:1rem;">
+                                <div style="font-size:0.85rem; color:var(--text-muted);">
+                                    <i class="fa-solid fa-location-dot"></i> Delivering to: <strong>${order.delivery_address}</strong>
+                                </div>
+                                <div style="display:flex; gap:0.75rem;">
+                                    <a href="order-tracking.html?id=${order.id}" class="btn btn-primary" style="padding:0.5rem 1rem;">
+                                        <i class="fa-solid fa-location-crosshairs"></i> Track Live Delivery
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            } catch (err) {
+                loading.style.display = 'none';
+                NutriCommon.showToast('Error loading orders: ' + err.message, 'danger');
+            }
+        });
+    </script>
+</body>
+</html>
