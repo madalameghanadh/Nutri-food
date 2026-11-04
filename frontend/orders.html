@@ -54,6 +54,7 @@
                     <i class="fa-solid fa-leaf"></i>
                     <span>NutriRoute<span class="ai-spark"><i class="fa-solid fa-sparkles"></i></span></span>
                 </a>
+                <button class="sidebar-close-btn" onclick="NutriCommon.closeSidebar()" aria-label="Close Navigation"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <nav class="sidebar-nav">
                 <div class="nav-label">NutriRoute System</div>
@@ -75,7 +76,7 @@
         <!-- Topbar -->
         <header class="topbar">
             <div class="topbar-left">
-                <button class="sidebar-toggle" title="Toggle Navigation"><i class="fa-solid fa-bars"></i></button>
+                <button class="sidebar-toggle" onclick="NutriCommon.toggleSidebar(event)" title="Toggle Navigation"><i class="fa-solid fa-bars"></i></button>
             </div>
             <div class="topbar-right">
                 <a href="cart.html" class="btn btn-outline" style="padding:0.4rem 0.8rem; margin-right:0.75rem;">

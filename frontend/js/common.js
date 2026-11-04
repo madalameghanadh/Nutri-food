@@ -78,7 +78,6 @@ const NutriCommon = {
             document.body.appendChild(container);
         }
 
-        const toast = document.createElement('div');
         const bgColors = {
             success: 'var(--primary, #10b981)',
             danger: '#ef4444',
@@ -93,6 +92,7 @@ const NutriCommon = {
             info: 'fa-circle-info'
         };
 
+        const toast = document.createElement('div');
         toast.style.cssText = `
             background: ${bgColors[type] || bgColors.success};
             color: #ffffff;
@@ -144,6 +144,54 @@ const NutriCommon = {
         }
     },
 
+    // Mobile sidebar drawer controllers
+    toggleSidebar(e) {
+        if (e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        const sidebar = document.querySelector('.sidebar');
+        let backdrop = document.querySelector('.sidebar-backdrop');
+        if (!backdrop) {
+            backdrop = document.createElement('div');
+            backdrop.className = 'sidebar-backdrop';
+            document.body.appendChild(backdrop);
+            backdrop.addEventListener('click', () => NutriCommon.closeSidebar());
+            backdrop.addEventListener('touchend', () => NutriCommon.closeSidebar());
+        }
+
+        if (!sidebar) return;
+        const isOpen = sidebar.classList.contains('show') || sidebar.classList.contains('open');
+        if (isOpen) {
+            NutriCommon.closeSidebar();
+        } else {
+            NutriCommon.openSidebar();
+        }
+    },
+
+    openSidebar() {
+        const sidebar = document.querySelector('.sidebar');
+        let backdrop = document.querySelector('.sidebar-backdrop');
+        if (!backdrop) {
+            backdrop = document.createElement('div');
+            backdrop.className = 'sidebar-backdrop';
+            document.body.appendChild(backdrop);
+            backdrop.addEventListener('click', () => NutriCommon.closeSidebar());
+            backdrop.addEventListener('touchend', () => NutriCommon.closeSidebar());
+        }
+        if (sidebar) sidebar.classList.add('show', 'open');
+        if (backdrop) backdrop.classList.add('active');
+        document.body.classList.add('sidebar-open');
+    },
+
+    closeSidebar() {
+        const sidebar = document.querySelector('.sidebar');
+        const backdrop = document.querySelector('.sidebar-backdrop');
+        if (sidebar) sidebar.classList.remove('show', 'open');
+        if (backdrop) backdrop.classList.remove('active');
+        document.body.classList.remove('sidebar-open');
+    },
+
     // Initialize layout scripts (sidebar active link, theme toggle, mobile drawer)
     initLayout() {
         // Highlight active link in sidebar
@@ -158,60 +206,51 @@ const NutriCommon = {
             }
         });
 
-        // Mobile sidebar toggle button & backdrop
-        const toggleBtn = document.querySelector('.sidebar-toggle');
+        // Ensure backdrop exists
+        let backdrop = document.querySelector('.sidebar-backdrop');
+        if (!backdrop) {
+            backdrop = document.createElement('div');
+            backdrop.className = 'sidebar-backdrop';
+            document.body.appendChild(backdrop);
+            backdrop.addEventListener('click', () => NutriCommon.closeSidebar());
+            backdrop.addEventListener('touchend', () => NutriCommon.closeSidebar());
+        }
+
+        // Attach to all toggle buttons (click and touchend)
+        const toggleBtns = document.querySelectorAll('.sidebar-toggle');
+        toggleBtns.forEach(btn => {
+            btn.onclick = (e) => NutriCommon.toggleSidebar(e);
+            btn.addEventListener('click', (e) => NutriCommon.toggleSidebar(e));
+        });
+
+        // Close drawer when clicking any sidebar link on mobile
         const sidebar = document.querySelector('.sidebar');
-        if (toggleBtn && sidebar) {
-            // Create or reuse backdrop overlay
-            let backdrop = document.querySelector('.sidebar-backdrop');
-            if (!backdrop) {
-                backdrop = document.createElement('div');
-                backdrop.className = 'sidebar-backdrop';
-                document.body.appendChild(backdrop);
-            }
-
-            const openDrawer = () => {
-                sidebar.classList.add('show', 'open');
-                backdrop.classList.add('active');
-            };
-
-            const closeDrawer = () => {
-                sidebar.classList.remove('show', 'open');
-                backdrop.classList.remove('active');
-            };
-
-            const toggleDrawer = (e) => {
-                if (e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                }
-                if (sidebar.classList.contains('show') || sidebar.classList.contains('open')) {
-                    closeDrawer();
-                } else {
-                    openDrawer();
-                }
-            };
-
-            toggleBtn.addEventListener('click', toggleDrawer);
-            backdrop.addEventListener('click', closeDrawer);
-
-            // Close drawer when clicking any sidebar link on mobile
+        if (sidebar) {
             sidebar.querySelectorAll('.nav-link').forEach(link => {
                 link.addEventListener('click', () => {
                     if (window.innerWidth <= 992) {
-                        closeDrawer();
+                        NutriCommon.closeSidebar();
                     }
                 });
             });
-
-            // Close on escape key
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape') closeDrawer();
-            });
         }
+
+        // Close on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') NutriCommon.closeSidebar();
+        });
     }
 };
 
-document.addEventListener('DOMContentLoaded', () => {
+// Global convenience bindings
+window.toggleSidebar = (e) => NutriCommon.toggleSidebar(e);
+window.closeSidebar = () => NutriCommon.closeSidebar();
+
+// Execute immediately if DOM already loaded, or on DOMContentLoaded
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        NutriCommon.initLayout();
+    });
+} else {
     NutriCommon.initLayout();
-});
+}
