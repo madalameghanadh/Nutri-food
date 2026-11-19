@@ -204,3 +204,4 @@ if __name__ == "__main__":
         print("Usage: python generate_appium_report.py <json_path> <output_path>")
         sys.exit(1)
     build_appium_report(sys.argv[1], sys.argv[2])
+

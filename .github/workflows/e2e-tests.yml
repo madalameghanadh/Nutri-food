@@ -16,17 +16,17 @@ jobs:
       - name: 📥 Check out repository
         uses: actions/checkout@v4
 
-      - name: 🟢 Set up Node.js 20.x
+      - name: 🟢 Set up Node.js 22.x
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: 'npm'
           cache-dependency-path: backend/package.json
 
       - name: 📦 Install Backend Node Dependencies
         working-directory: backend
         run: |
-          npm ci || npm install
+          npm install
 
       - name: 🚀 Start NutriRoute Backend & Static Server
         working-directory: backend
@@ -35,10 +35,21 @@ jobs:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL || 'https://placeholder.supabase.co' }}
           SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY || 'placeholder' }}
         run: |
-          node server.js &
+          node server.js > server.log 2>&1 &
           echo "Waiting for server to become healthy on http://localhost:5000..."
-          timeout 30 sh -c 'until curl -s http://localhost:5000/api/healthcheck; do sleep 1; done'
-          echo "Server is ONLINE!"
+          for i in {1..30}; do
+            if curl -s -f http://localhost:5000/api/healthcheck > /dev/null; then
+              echo "Server is ONLINE and healthy!"
+              break
+            fi
+            echo "Waiting for server ($i/30)..."
+            sleep 1
+          done
+          if ! curl -s -f http://localhost:5000/api/healthcheck > /dev/null; then
+            echo "Server failed to respond within 30 seconds. Log output:"
+            cat server.log
+            exit 1
+          fi
 
       - name: 🐍 Set up Python 3.11
         uses: actions/setup-python@v5
@@ -108,4 +119,3 @@ jobs:
           ---
           > 📁 **Detailed Excel Report:** Download the generated `.xlsx` report from the **Artifacts** section above for full step-by-step logs of all 325 test cases.
           EOF
-

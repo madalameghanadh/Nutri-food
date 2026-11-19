@@ -185,3 +185,4 @@ if __name__ == "__main__":
         print("Usage: python generate_load_report.py <json_path> <output_path>")
         sys.exit(1)
     build_load_report(sys.argv[1], sys.argv[2])
+

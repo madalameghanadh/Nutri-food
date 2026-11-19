@@ -321,3 +321,4 @@ if (require.main === module) {
 }
 
 module.exports = { AppiumMobileTestSuite, MOBILE_TEST_CASES };
+
