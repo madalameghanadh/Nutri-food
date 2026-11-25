@@ -4,6 +4,10 @@ const path = require('path');
 require('dotenv').config();
 
 const errorHandler = require('./middleware/errorHandler');
+const { connectMongoDB } = require('./config/mongodb');
+
+// Optional MongoDB Connection (Compass / Atlas)
+connectMongoDB();
 
 // Import routes
 const authRoutes = require('./routes/authRoutes');
