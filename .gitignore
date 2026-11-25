@@ -33,3 +33,6 @@ __pycache__/
 *.py[cod]
 *$py.class
 .pytest_cache/
+
+# MongoDB local data
+.mongodb_data/
