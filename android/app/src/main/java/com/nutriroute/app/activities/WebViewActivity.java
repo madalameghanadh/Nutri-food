@@ -43,18 +43,19 @@ public class WebViewActivity extends AppCompatActivity {
     private ValueCallback<Uri[]> fileUploadCallback;
     private ActivityResultLauncher<Intent> fileChooserLauncher;
 
-    // Website Base URL — change this to your deployed server URL when hosting remotely
-    private static final String BASE_URL = "http://192.168.1.18:5000";
-    // Entry page for mobile app: bypasses landing page, starts at login
-    private static final String ENTRY_URL = BASE_URL + "/login.html";
-
-    /*
-     * For physical device testing over Wi-Fi, use your PC's local IP:
-     * private static final String BASE_URL = "http://192.168.1.XXX:5000";
-     *
-     * For production deployment:
-     * private static final String BASE_URL = "https://your-deployed-url.com";
-     */
+    // Candidate Base URLs in priority order:
+    // 1. localhost (works via USB cable with adb reverse)
+    // 2. Current PC Wi-Fi IP: 192.168.1.19
+    // 3. Fallback IP: 192.168.1.18
+    // 4. Android Emulator: 10.0.2.2
+    private static final String[] CANDIDATE_URLS = {
+        "http://localhost:5000",
+        "http://192.168.1.19:5000",
+        "http://192.168.1.18:5000",
+        "http://10.0.2.2:5000"
+    };
+    private int candidateIndex = 0;
+    private String currentBaseUrl = CANDIDATE_URLS[0];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +88,7 @@ public class WebViewActivity extends AppCompatActivity {
         // Retry button in error screen
         findViewById(R.id.btnRetry).setOnClickListener(v -> {
             if (isNetworkAvailable()) {
+                candidateIndex = 0;
                 hideErrorScreen();
                 loadWebsite();
             }
@@ -189,13 +191,15 @@ public class WebViewActivity extends AppCompatActivity {
                 // redirect straight to login.html to keep landing page hidden in the mobile app
                 String path = uri.getPath();
                 if (path == null || path.isEmpty() || path.equals("/") || path.endsWith("/index.html")) {
-                    view.loadUrl(ENTRY_URL);
+                    view.loadUrl(currentBaseUrl + "/login.html");
                     return true;
                 }
 
                 // Keep website navigation within the WebView
-                if (url.startsWith(BASE_URL) || url.startsWith("http://192.168.1.18:5000") || url.startsWith("http://localhost:5000") || url.startsWith("http://10.0.2.2:5000")) {
-                    return false; // Load in WebView
+                for (String candidate : CANDIDATE_URLS) {
+                    if (url.startsWith(candidate)) {
+                        return false; // Load in WebView
+                    }
                 }
 
                 // External links (e.g., social media, maps) — open in browser
@@ -207,9 +211,14 @@ public class WebViewActivity extends AppCompatActivity {
             @Override
             public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
                 super.onReceivedError(view, request, error);
-                // Only show error for main frame (not sub-resources like images)
+                // Only handle error for main frame (not sub-resources like images)
                 if (request.isForMainFrame()) {
-                    showErrorScreen();
+                    if (candidateIndex + 1 < CANDIDATE_URLS.length) {
+                        candidateIndex++;
+                        view.post(() -> loadWebsite());
+                    } else {
+                        showErrorScreen();
+                    }
                 }
             }
         });
@@ -270,7 +279,8 @@ public class WebViewActivity extends AppCompatActivity {
     }
 
     private void loadWebsite() {
-        webView.loadUrl(ENTRY_URL);
+        currentBaseUrl = CANDIDATE_URLS[candidateIndex];
+        webView.loadUrl(currentBaseUrl + "/login.html");
     }
 
     private void showErrorScreen() {

@@ -16,6 +16,20 @@ async function startServer() {
         const dbPath = path.join(__dirname, '..', '.mongodb_data');
         if (!fs.existsSync(dbPath)) {
             fs.mkdirSync(dbPath, { recursive: true });
+        } else {
+            // Clean up stale lock files from previous unexpected shutdown
+            const lockFiles = ['mongod.lock', 'WiredTiger.lock'];
+            lockFiles.forEach(file => {
+                const lockFilePath = path.join(dbPath, file);
+                if (fs.existsSync(lockFilePath)) {
+                    try {
+                        fs.unlinkSync(lockFilePath);
+                        console.log(`🧹 Cleaned up stale lock file: ${file}`);
+                    } catch (e) {
+                        // ignore if in use
+                    }
+                }
+            });
         }
 
         const mongod = await MongoMemoryServer.create({
