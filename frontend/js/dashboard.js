@@ -86,22 +86,24 @@ function renderDashboardRecommendations(recs) {
     container.innerHTML = recs.map(r => {
         const food = r.food;
         return `
-            <div class="card food-card" style="margin-bottom:1rem; display:flex; flex-direction:row; align-items:center; gap:1rem; padding:1rem;">
-                <img src="${food.image || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=200'}" alt="${food.name}" style="width:80px; height:80px; object-fit:cover; border-radius:12px;">
-                <div style="flex:1;">
-                    <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-                        <h4 style="margin:0 0 0.3rem 0; font-size:1rem;">${food.name}</h4>
-                        <span class="badge badge-success" style="font-size:0.75rem;"><i class="fa-solid fa-sparkles"></i> ${r.score}% Match</span>
+            <div class="card food-card dash-rec-card">
+                <div class="dash-rec-main">
+                    <img src="${food.image || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=200'}" alt="${food.name}" class="dash-rec-img">
+                    <div class="dash-rec-info">
+                        <div class="dash-rec-header">
+                            <h4 class="dash-rec-title">${food.name}</h4>
+                            <span class="badge badge-success dash-rec-badge"><i class="fa-solid fa-sparkles"></i> ${r.score}% Match</span>
+                        </div>
+                        <p class="dash-rec-reason">${r.reason || 'Matches your dietary profile.'}</p>
                     </div>
-                    <p style="font-size:0.8rem; color:var(--text-muted); margin:0 0 0.4rem 0;">${r.reason || 'Matches your dietary profile.'}</p>
-                    <div style="display:flex; gap:0.75rem; font-size:0.75rem; color:var(--text-main); font-weight:500;">
+                </div>
+                <div class="dash-rec-footer">
+                    <div class="dash-rec-macros">
                         <span>🔥 ${food.calories} kcal</span>
                         <span>💪 ${food.protein}g Protein</span>
                         <span>🌾 ${food.fiber || 0}g Fiber</span>
                     </div>
-                </div>
-                <div>
-                    <a href="food-details.html?id=${food.id}" class="btn btn-outline btn-sm">Details</a>
+                    <a href="food-details.html?id=${food.id}" class="btn btn-outline btn-sm dash-rec-btn">Details</a>
                 </div>
             </div>
         `;

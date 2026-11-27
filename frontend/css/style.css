@@ -1089,3 +1089,153 @@ h1, h2, h3, h4, h5, h6 {
     right: 15px;
   }
 }
+
+
+/* ==========================================================================
+   Mobile Responsive Alignment Fixes (Phones & Tablets)
+   ========================================================================== */
+
+html, body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+.app-wrapper {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+/* Dashboard Food Recommendation Cards */
+.dash-rec-card {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.75rem !important;
+  padding: 1rem !important;
+  background: var(--bg-card) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: var(--radius-lg) !important;
+  margin-bottom: 1rem !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+}
+
+.dash-rec-main {
+  display: flex !important;
+  gap: 0.85rem !important;
+  align-items: flex-start !important;
+  width: 100% !important;
+}
+
+.dash-rec-img {
+  width: 75px !important;
+  height: 75px !important;
+  min-width: 75px !important;
+  max-width: 75px !important;
+  object-fit: cover !important;
+  border-radius: 12px !important;
+  flex-shrink: 0 !important;
+}
+
+.dash-rec-info {
+  flex: 1 !important;
+  min-width: 0 !important;
+}
+
+.dash-rec-header {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: flex-start !important;
+  gap: 0.5rem !important;
+  margin-bottom: 0.35rem !important;
+  flex-wrap: wrap !important;
+}
+
+.dash-rec-title {
+  margin: 0 !important;
+  font-size: 1.05rem !important;
+  font-weight: 700 !important;
+  color: var(--text-main) !important;
+  line-height: 1.35 !important;
+  word-break: break-word !important;
+}
+
+.dash-rec-badge {
+  white-space: nowrap !important;
+  font-size: 0.75rem !important;
+  padding: 0.25rem 0.6rem !important;
+  border-radius: var(--radius-full) !important;
+  flex-shrink: 0 !important;
+}
+
+.dash-rec-reason {
+  font-size: 0.825rem !important;
+  color: var(--text-muted) !important;
+  margin: 0 !important;
+  line-height: 1.45 !important;
+  word-break: break-word !important;
+}
+
+.dash-rec-footer {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  gap: 0.75rem !important;
+  padding-top: 0.65rem !important;
+  border-top: 1px dashed var(--border-color) !important;
+  width: 100% !important;
+  flex-wrap: wrap !important;
+}
+
+.dash-rec-macros {
+  display: flex !important;
+  gap: 0.65rem !important;
+  font-size: 0.78rem !important;
+  color: var(--text-main) !important;
+  font-weight: 600 !important;
+  flex-wrap: wrap !important;
+}
+
+.dash-rec-btn {
+  padding: 0.35rem 0.95rem !important;
+  font-size: 0.8rem !important;
+  white-space: nowrap !important;
+  border-radius: var(--radius-md) !important;
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    margin-left: 0 !important;
+    padding: 1rem 0.75rem !important;
+    max-width: 100vw !important;
+    overflow-x: hidden !important;
+    box-sizing: border-box !important;
+  }
+
+  .card {
+    padding: 1rem !important;
+    border-radius: var(--radius-md) !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .card-header {
+    flex-wrap: wrap !important;
+    gap: 0.5rem !important;
+    margin-bottom: 0.85rem !important;
+  }
+
+  .card-header h3 {
+    font-size: 1.05rem !important;
+  }
+
+  .dash-rec-footer {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+
+  .dash-rec-footer .btn {
+    width: 100% !important;
+    text-align: center !important;
+    margin-top: 0.35rem !important;
+  }
+}
