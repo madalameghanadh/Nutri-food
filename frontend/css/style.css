@@ -1239,3 +1239,31 @@ html, body {
     margin-top: 0.35rem !important;
   }
 }
+
+
+/* Sidebar High Priority Mobile Drawer Overrides */
+.sidebar.show,
+.sidebar.open {
+  transform: translateX(0) !important;
+  box-shadow: 6px 0 30px rgba(0, 0, 0, 0.45) !important;
+  display: flex !important;
+  visibility: visible !important;
+  z-index: 999999 !important;
+  pointer-events: auto !important;
+}
+
+.sidebar-backdrop.active {
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+  z-index: 999990 !important;
+}
+
+.sidebar-toggle {
+  cursor: pointer !important;
+  pointer-events: auto !important;
+  z-index: 9999 !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  touch-action: manipulation !important;
+}

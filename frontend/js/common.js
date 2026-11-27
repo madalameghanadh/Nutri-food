@@ -144,13 +144,23 @@ const NutriCommon = {
         }
     },
 
+    _lastSidebarToggle: 0,
+
     // Mobile sidebar drawer controllers
     toggleSidebar(e) {
         if (e) {
             e.preventDefault();
             e.stopPropagation();
         }
+        const now = Date.now();
+        if (now - NutriCommon._lastSidebarToggle < 400) {
+            return; // Ignore duplicate rapid/synthetic events
+        }
+        NutriCommon._lastSidebarToggle = now;
+
         const sidebar = document.querySelector('.sidebar');
+        if (!sidebar) return;
+
         let backdrop = document.querySelector('.sidebar-backdrop');
         if (!backdrop) {
             backdrop = document.createElement('div');
@@ -160,7 +170,6 @@ const NutriCommon = {
             backdrop.addEventListener('touchend', () => NutriCommon.closeSidebar());
         }
 
-        if (!sidebar) return;
         const isOpen = sidebar.classList.contains('show') || sidebar.classList.contains('open');
         if (isOpen) {
             NutriCommon.closeSidebar();
@@ -179,16 +188,36 @@ const NutriCommon = {
             backdrop.addEventListener('click', () => NutriCommon.closeSidebar());
             backdrop.addEventListener('touchend', () => NutriCommon.closeSidebar());
         }
-        if (sidebar) sidebar.classList.add('show', 'open');
-        if (backdrop) backdrop.classList.add('active');
+        if (sidebar) {
+            sidebar.classList.add('show', 'open');
+            sidebar.style.setProperty('transform', 'translateX(0)', 'important');
+            sidebar.style.setProperty('display', 'flex', 'important');
+            sidebar.style.setProperty('visibility', 'visible', 'important');
+        }
+        if (backdrop) {
+            backdrop.classList.add('active');
+            backdrop.style.setProperty('opacity', '1', 'important');
+            backdrop.style.setProperty('visibility', 'visible', 'important');
+            backdrop.style.setProperty('pointer-events', 'auto', 'important');
+        }
         document.body.classList.add('sidebar-open');
     },
 
     closeSidebar() {
         const sidebar = document.querySelector('.sidebar');
         const backdrop = document.querySelector('.sidebar-backdrop');
-        if (sidebar) sidebar.classList.remove('show', 'open');
-        if (backdrop) backdrop.classList.remove('active');
+        if (sidebar) {
+            sidebar.classList.remove('show', 'open');
+            if (window.innerWidth <= 992) {
+                sidebar.style.setProperty('transform', 'translateX(-100%)', 'important');
+            }
+        }
+        if (backdrop) {
+            backdrop.classList.remove('active');
+            backdrop.style.setProperty('opacity', '0', 'important');
+            backdrop.style.setProperty('visibility', 'hidden', 'important');
+            backdrop.style.setProperty('pointer-events', 'none', 'important');
+        }
         document.body.classList.remove('sidebar-open');
     },
 
@@ -216,11 +245,10 @@ const NutriCommon = {
             backdrop.addEventListener('touchend', () => NutriCommon.closeSidebar());
         }
 
-        // Attach to all toggle buttons (click and touchend)
+        // Attach to all toggle buttons (single listener with debouncing)
         const toggleBtns = document.querySelectorAll('.sidebar-toggle');
         toggleBtns.forEach(btn => {
             btn.onclick = (e) => NutriCommon.toggleSidebar(e);
-            btn.addEventListener('click', (e) => NutriCommon.toggleSidebar(e));
         });
 
         // Close drawer when clicking any sidebar link on mobile

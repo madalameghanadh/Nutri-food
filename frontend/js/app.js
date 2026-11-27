@@ -35,45 +35,10 @@ const NutriApp = {
 
     // 2. Sidebar Mobile Drawer Toggle
     setupSidebarToggle() {
+        // Delegated to NutriCommon in common.js to avoid duplicate event dispatch
         const toggleBtn = document.querySelector('.sidebar-toggle');
-        const sidebar = document.querySelector('.sidebar');
-        if (toggleBtn && sidebar) {
-            let backdrop = document.querySelector('.sidebar-backdrop');
-            if (!backdrop) {
-                backdrop = document.createElement('div');
-                backdrop.className = 'sidebar-backdrop';
-                document.body.appendChild(backdrop);
-            }
-
-            const openDrawer = () => {
-                sidebar.classList.add('show', 'open');
-                backdrop.classList.add('active');
-            };
-
-            const closeDrawer = () => {
-                sidebar.classList.remove('show', 'open');
-                backdrop.classList.remove('active');
-            };
-
-            toggleBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                if (sidebar.classList.contains('show') || sidebar.classList.contains('open')) {
-                    closeDrawer();
-                } else {
-                    openDrawer();
-                }
-            });
-
-            backdrop.addEventListener('click', closeDrawer);
-
-            sidebar.querySelectorAll('.nav-link').forEach(link => {
-                link.addEventListener('click', () => {
-                    if (window.innerWidth <= 992) {
-                        closeDrawer();
-                    }
-                });
-            });
+        if (toggleBtn && typeof NutriCommon !== 'undefined') {
+            toggleBtn.onclick = (e) => NutriCommon.toggleSidebar(e);
         }
     },
 
